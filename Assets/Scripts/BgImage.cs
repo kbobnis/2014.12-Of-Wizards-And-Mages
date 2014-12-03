@@ -1,0 +1,29 @@
+﻿using UnityEngine;
+using System.Collections;
+using UnityEngine.UI;
+using System;
+
+public class BgImage : MonoBehaviour {
+
+	public Sprite Sprite;
+	public bool LittleTransparent;
+
+	void Awake() {
+		if (GetComponent<Image>() != null) {
+			throw new Exception("There can not be image and bgimage components added");
+		}
+		if (GetComponent<CanvasRenderer>() != null) {
+			throw new Exception("There is no need for canvasRenderer when bgImage is added");
+		}
+	}
+
+	void Update() {
+		OnEnable();
+	}
+
+	void OnEnable() {
+		if (Game.Me != null) {
+			Game.Me.GetComponent<BackgroundHolder>().ChangeBg(Sprite, LittleTransparent);
+		}
+	}
+}
