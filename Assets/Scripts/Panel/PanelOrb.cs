@@ -8,7 +8,10 @@ public class PanelOrb : MonoBehaviour {
 	private Card _Card;
 
 	internal Card Card{
-		get { return _Card; }
+		get {
+			
+			return _Card; 
+		}
 		set {
 			_Card = value;
 			ImageSpell.GetComponent<Image>().sprite = _Card==null ? null :_Card.Icon;

@@ -2,11 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.UI;
 
 public class PanelMageAndOrbs : MonoBehaviour, MageControlListener {
 
 	public GameObject MageControl;
-	public GameObject PanelMage;
+	public GameObject GameObjectSpellBg;
 	public List<GameObject> LeftOrbs = new List<GameObject>();
 	public List<GameObject> RightOrbs = new List<GameObject>();
 
@@ -21,16 +22,16 @@ public class PanelMageAndOrbs : MonoBehaviour, MageControlListener {
 			case Side.Left: {
 				Card c = LeftOrbs[0].GetComponent<PanelOrb>().Card;
 				if (c != null) {
-					LeftOrbs[0].GetComponent<PanelOrb>().Card = PanelMage.GetComponent<PanelOrb>().Card;
-					PanelMage.GetComponent<PanelOrb>().Card = c;
+					LeftOrbs[0].GetComponent<PanelOrb>().Card = GameObjectSpellBg.GetComponent<PanelOrb>().Card;
+					GameObjectSpellBg.GetComponent<PanelOrb>().Card = c;
 				}
 				break;
 			}
 			case Side.Right: {
 				Card c = RightOrbs[0].GetComponent<PanelOrb>().Card;
 				if (c != null) {
-					RightOrbs[0].GetComponent<PanelOrb>().Card = PanelMage.GetComponent<PanelOrb>().Card;
-					PanelMage.GetComponent<PanelOrb>().Card = c;
+					RightOrbs[0].GetComponent<PanelOrb>().Card = GameObjectSpellBg.GetComponent<PanelOrb>().Card;
+					GameObjectSpellBg.GetComponent<PanelOrb>().Card = c;
 				}
 				break;
 			}
@@ -38,12 +39,31 @@ public class PanelMageAndOrbs : MonoBehaviour, MageControlListener {
 	}
 
 	public void Drop() {
-		PanelMage.GetComponent<PanelOrb>().Card = null;
+		GameObjectSpellBg.GetComponent<PanelOrb>().Card = null;
 		LoadCards();
 	}
 
 	public void Cast(Vector3 direction) {
+		Card c = GameObjectSpellBg.GetComponent<PanelOrb>().Card;
+		c.ThrowMe(GameObjectSpellBg.transform.position, direction);
+		GameObjectSpellBg.GetComponent<PanelOrb>().Card = null;
+		LoadCards();
+	}
 
+	public void WantCast() {
+		Card c = GameObjectSpellBg.GetComponent<PanelOrb>().Card;
+		Sprite s = c.Effect;
+
+		MageControl.GetComponent<Image>().sprite = s;
+		MageControl.GetComponent<RectTransform>().anchorMin = new Vector2(-s.bounds.size.x / 2, -s.bounds.size.y / 2);
+	}
+
+	public void DontWantCast() {
+		Card c = GameObjectSpellBg.GetComponent<PanelOrb>().Card;
+		Sprite s = c.Icon;
+
+		MageControl.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0);
+		MageControl.GetComponent<Image>().sprite = s;
 	}
 
 	internal void SetDeck(List<Card> list) {
@@ -55,7 +75,7 @@ public class PanelMageAndOrbs : MonoBehaviour, MageControlListener {
 	}
 
 	private void LoadCardsInner() {
-		LoadCard(PanelMage.GetComponent<PanelOrb>(), new List<PanelOrb>() { RightOrbs[0].GetComponent<PanelOrb>(), LeftOrbs[0].GetComponent<PanelOrb>() }, Deck);
+		LoadCard(GameObjectSpellBg.GetComponent<PanelOrb>(), new List<PanelOrb>() { RightOrbs[0].GetComponent<PanelOrb>(), LeftOrbs[0].GetComponent<PanelOrb>() }, Deck);
 		LoadCard(RightOrbs[0].GetComponent<PanelOrb>(), null, Deck);
 		LoadCard(LeftOrbs[0].GetComponent<PanelOrb>(), null, Deck);
 	}
@@ -73,7 +93,6 @@ public class PanelMageAndOrbs : MonoBehaviour, MageControlListener {
 				}
 				if (beforeOrbs.Count > 0) {
 					int index = Random.Range(0, beforeOrbs.Count);
-					Debug.Log("index: " + index);
 					c = beforeOrbs[index].Card;
 					beforeOrbs[index].Card = null;
 				}
@@ -90,4 +109,6 @@ public class PanelMageAndOrbs : MonoBehaviour, MageControlListener {
 			panelOrb.Card = c;
 		}
 	}
+
+
 }

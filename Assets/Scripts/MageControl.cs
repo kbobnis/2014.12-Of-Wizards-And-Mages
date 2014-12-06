@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System;
 
 public class MageControl : MonoBehaviour {
 
@@ -13,6 +14,7 @@ public class MageControl : MonoBehaviour {
 	private bool IsDown;
 	private Vector3 Delta;
 	private Side ActualSide;
+	private bool IsFarAway;
 
 
 	void Awake() {
@@ -82,36 +84,59 @@ public class MageControl : MonoBehaviour {
 		GetComponent<RectTransform>().transform.position = now;
 
 		float distance = Mathf.Abs(Delta.x) > Mathf.Abs(Delta.y) ? Mathf.Abs(Delta.x) : Mathf.Abs(Delta.y);
-		bool isFarAway = distance > Screen.width / 20;
+		IsFarAway = distance > Screen.width / 20;
 		ActualSide = Side.None;
 		if (Mathf.Abs(Delta.x) > Mathf.Abs(Delta.y)) {
 			ActualSide = Delta.x > 0 ? Side.Right : Side.Left;
 		} else {
 			ActualSide = Delta.y > 0 ? Side.Up : Side.Down;
 		}
-		HighlightArrow(isFarAway? ActualSide : Side.None) ;
+		HighlightArrow(IsFarAway? ActualSide : Side.None) ;
+		//if casting spell
+		try {
+			if (IsFarAway && ActualSide == Side.Up) {
+				foreach (MageControlListener mcl in MageControlListeners) {
+					mcl.WantCast();
+				}
+			} else {
+				foreach (MageControlListener mcl in MageControlListeners) {
+					mcl.DontWantCast();
+				}
+			}
+		} catch (Exception s) {
+			Debug.Log("s: " + s);
+		}
 	}
 
 
 	public void Release(BaseEventData bed) {
 		GetComponent<RectTransform>().localPosition = new Vector3();
 		IsDown = false;
-		Delta.Set(0, 0, 0);
+		
 		SetArrowsActive(false);
-		switch (ActualSide) {
-			case Side.Left: 
-			case Side.Right: {
-				foreach(MageControlListener mcl in MageControlListeners){
-					mcl.SwapSpell(ActualSide);
+		if (IsFarAway){
+			switch (ActualSide) {
+				case Side.Left: 
+				case Side.Right: {
+					foreach(MageControlListener mcl in MageControlListeners){
+						mcl.SwapSpell(ActualSide);
+					}
+					break;
 				}
-				break;
-			}
-			case Side.Down: {
-				foreach (MageControlListener mcl in MageControlListeners) {
-					mcl.Drop();
+				case Side.Down: {
+					foreach (MageControlListener mcl in MageControlListeners) {
+						mcl.Drop();
+					}
+					break;
 				}
-				break;
+				case Side.Up: {
+					foreach (MageControlListener mcl in MageControlListeners) {
+						mcl.Cast(Delta);
+					}
+					break;
+				}
 			}
 		}
+		Delta.Set(0, 0, 0);
 	}
 }

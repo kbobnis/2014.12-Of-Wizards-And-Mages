@@ -9,4 +9,6 @@ public interface MageControlListener {
 	void SwapSpell(Side s);
 	void Drop();
 	void Cast(Vector3 side);
+	void WantCast();
+	void DontWantCast();
 }
