@@ -6,7 +6,6 @@ using System;
 public class BgImage : MonoBehaviour {
 
 	public Sprite Sprite;
-	public bool LittleTransparent;
 
 	void Awake() {
 		if (GetComponent<Image>() != null) {
@@ -23,7 +22,7 @@ public class BgImage : MonoBehaviour {
 
 	void OnEnable() {
 		if (Game.Me != null) {
-			Game.Me.GetComponent<BackgroundHolder>().ChangeBg(Sprite, LittleTransparent);
+			Game.Me.GetComponent<BackgroundHolder>().ChangeBg(Sprite);
 		}
 	}
 }

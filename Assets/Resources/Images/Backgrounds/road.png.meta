@@ -3,6 +3,9 @@ guid: dce5149181ab689479a77445167a8c2f
 TextureImporter:
   fileIDToRecycleName:
     21300000: bg
+    21300002: roadBg
+    21300004: roda
+    21300006: road
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -26,9 +29,9 @@ TextureImporter:
   maxTextureSize: 1024
   textureSettings:
     filterMode: 0
-    aniso: -1
+    aniso: 1
     mipBias: -1
-    wrapMode: -1
+    wrapMode: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50

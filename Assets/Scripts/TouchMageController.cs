@@ -5,10 +5,11 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
 
-public class MageControl : MonoBehaviour {
+public class TouchMageController : MonoBehaviour {
 
+	public GameObject TouchOn;
 	public GameObject ArrowUp, ArrowDown, ArrowLeft, ArrowRight;
-	public List<MageControlListener> MageControlListeners = new List<MageControlListener>();
+	public MageControlListener MageControlListener;
 
 	private Vector3 StartDrag;
 	private bool IsDown;
@@ -18,7 +19,9 @@ public class MageControl : MonoBehaviour {
 
 
 	void Awake() {
-		EventTrigger et = gameObject.AddComponent<EventTrigger>();
+		MageControlListener = GetComponent<PanelMageAndOrbs>();
+
+		EventTrigger et = TouchOn.AddComponent<EventTrigger>();
 		et.delegates = new System.Collections.Generic.List<EventTrigger.Entry>();
 
 		EventTrigger.Entry entry = new EventTrigger.Entry();
@@ -79,38 +82,34 @@ public class MageControl : MonoBehaviour {
 	}
 
 	private void Drag(BaseEventData bed) {
-		Vector3 now = Input.mousePosition;
-		Delta = now - StartDrag;
-		GetComponent<RectTransform>().transform.position = now;
-
-		float distance = Mathf.Abs(Delta.x) > Mathf.Abs(Delta.y) ? Mathf.Abs(Delta.x) : Mathf.Abs(Delta.y);
-		IsFarAway = distance > Screen.width / 20;
-		ActualSide = Side.None;
-		if (Mathf.Abs(Delta.x) > Mathf.Abs(Delta.y)) {
-			ActualSide = Delta.x > 0 ? Side.Right : Side.Left;
-		} else {
-			ActualSide = Delta.y > 0 ? Side.Up : Side.Down;
-		}
-		HighlightArrow(IsFarAway? ActualSide : Side.None) ;
-		//if casting spell
 		try {
-			if (IsFarAway && ActualSide == Side.Up) {
-				foreach (MageControlListener mcl in MageControlListeners) {
-					mcl.WantCast();
-				}
+			Vector3 now = Input.mousePosition;
+			Delta = now - StartDrag;
+			TouchOn.GetComponent<RectTransform>().transform.position = now;
+
+			float distance = Mathf.Abs(Delta.x) > Mathf.Abs(Delta.y) ? Mathf.Abs(Delta.x) : Mathf.Abs(Delta.y);
+			IsFarAway = distance > Screen.width / 20;
+			ActualSide = Side.None;
+			if (Mathf.Abs(Delta.x) > Mathf.Abs(Delta.y)) {
+				ActualSide = Delta.x > 0 ? Side.Right : Side.Left;
 			} else {
-				foreach (MageControlListener mcl in MageControlListeners) {
-					mcl.DontWantCast();
-				}
+				ActualSide = Delta.y > 0 ? Side.Up : Side.Down;
 			}
-		} catch (Exception s) {
-			Debug.Log("s: " + s);
+			HighlightArrow(IsFarAway ? ActualSide : Side.None);
+			//if casting spell
+			if (IsFarAway && ActualSide == Side.Up) {
+				MageControlListener.WantCast();
+			} else {
+				MageControlListener.DontWantCast();
+			}
+		} catch (Exception e) {
+			Debug.Log("e: " + e);
 		}
 	}
 
 
 	public void Release(BaseEventData bed) {
-		GetComponent<RectTransform>().localPosition = new Vector3();
+		TouchOn.GetComponent<RectTransform>().localPosition = new Vector3();
 		IsDown = false;
 		
 		SetArrowsActive(false);
@@ -118,21 +117,15 @@ public class MageControl : MonoBehaviour {
 			switch (ActualSide) {
 				case Side.Left: 
 				case Side.Right: {
-					foreach(MageControlListener mcl in MageControlListeners){
-						mcl.SwapSpell(ActualSide);
-					}
+					MageControlListener.SwapSpell(ActualSide);
 					break;
 				}
 				case Side.Down: {
-					foreach (MageControlListener mcl in MageControlListeners) {
-						mcl.Drop();
-					}
+					MageControlListener.Drop();
 					break;
 				}
 				case Side.Up: {
-					foreach (MageControlListener mcl in MageControlListeners) {
-						mcl.Cast(Delta);
-					}
+					MageControlListener.Cast(Delta);
 					break;
 				}
 			}
