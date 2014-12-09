@@ -1,9 +1,8 @@
 fileFormatVersion: 2
-guid: a0ae5afd17fb4c24099be19b1e2f35cb
+guid: 422a9eb6e7e07384e9af0b666df4f639
 TextureImporter:
   fileIDToRecycleName:
-    21300000: ice
-    21300002: iceAnimation
+    21300000: fireballIcon
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -39,7 +38,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: .5, y: .5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 1
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []

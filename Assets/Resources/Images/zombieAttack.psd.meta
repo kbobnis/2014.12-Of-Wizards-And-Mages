@@ -1,9 +1,8 @@
 fileFormatVersion: 2
-guid: 368a3c3089ac24645ab372d1e1bbc54f
+guid: f915f76234a637a4bb676e466b0432fc
 TextureImporter:
   fileIDToRecycleName:
-    21300000: ball 1
-    21300002: ball
+    21300000: zombieAttack
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -26,10 +25,10 @@ TextureImporter:
   textureFormat: -1
   maxTextureSize: 1024
   textureSettings:
-    filterMode: 0
-    aniso: 1
+    filterMode: -1
+    aniso: -1
     mipBias: -1
-    wrapMode: 1
+    wrapMode: -1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50

@@ -6,14 +6,9 @@ public class Mover : MonoBehaviour {
 	private Vector3 Direction;
 	private int Speed;
 
-	void Update () {
-		if (Speed != 0) {
-			transform.position += Direction.normalized * Speed * Time.deltaTime * AspectRatioKeeper.ActualScale;
-		}
-	}
-
 	internal void Prepare(Vector3 direction, int speed) {
 		Direction = direction;
 		Speed = speed;
+		GetComponent<Rigidbody2D>().AddForce(direction.normalized * Speed * 100);
 	}
 }
