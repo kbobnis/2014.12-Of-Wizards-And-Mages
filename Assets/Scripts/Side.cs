@@ -24,4 +24,12 @@ public static class SideMethods {
 			default: return 0;
 		}
 	}
+
+	public static Side Opposite(this Side s) {
+		switch (s) {
+			case Side.Left: return Side.Right;
+			case Side.Right: return Side.Left;
+		}
+		throw new Exception("There is no need for opposite different to left and right");
+	}
 }

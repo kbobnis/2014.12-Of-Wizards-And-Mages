@@ -2,44 +2,34 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class MageState  {
+public class OrbState  {
 
-	private List<Deck> _Decks = new List<Deck>();
-	private OrbState _Mage, _LeftOrb, _RightOrb;
-	private List<Deck> decks;
-
-	public OrbState Mage {
-		get { return _Mage; }
-	}
-	public OrbState LeftOrb {
-		get { return _LeftOrb; }
-	}
-	public OrbState RightOrb {
-		get { return _RightOrb; }
-	}
-
-	public List<Deck> Decks {
-		get { return _Decks; }
-	}
-
-	public MageState(List<Deck> decks, OrbState mage, OrbState leftOrb, OrbState rightOrb) {
-		_Decks = decks;
-		_Mage = mage;
-		_LeftOrb = leftOrb;
-		_RightOrb = rightOrb;
-	}
-
-}
-
-public class OrbState {
-
+	private Deck _Deck;
 	private int _Health;
+	private OrbState _LeftOrbState, _RightOrbState;
+	public Dictionary<AnimationType, Sprite> Animations;
 
-	public OrbState(int health) {
-		_Health = health;
+	public OrbState LeftOrbState {
+		get { return _LeftOrbState; }
+	}
+	public OrbState RightOrbState {
+		get { return _RightOrbState; }
 	}
 
 	public int Health {
 		get { return _Health; }
 	}
+
+	public Deck Deck {
+		get { return _Deck; }
+	}
+	public OrbState(Deck deck, int health, Dictionary<AnimationType, Sprite> animations, OrbState leftOrbState, OrbState rightOrbState) {
+		_Deck = deck;
+		Animations = animations;
+		_Health = health;
+		_LeftOrbState = leftOrbState;
+		_RightOrbState = rightOrbState;
+	}
+
 }
+

@@ -7,9 +7,7 @@ using System;
 
 public class TouchMageController : MonoBehaviour {
 
-	public GameObject ArrowUp, ArrowDown, ArrowLeft, ArrowRight, GameObjectMageControlListener;
-
-	public MageControlListener MageControlListener;
+	public GameObject ArrowUp, ArrowDown, ArrowLeft, ArrowRight, PanelOrbToControl;
 
 	private Vector3 StartDrag;
 	private bool IsDown;
@@ -19,7 +17,6 @@ public class TouchMageController : MonoBehaviour {
 
 
 	void Awake() {
-		MageControlListener = GameObjectMageControlListener.GetComponent<PanelMageAndOrbs>();
 
 		SetArrowsActive(false);
 	}
@@ -89,9 +86,9 @@ public class TouchMageController : MonoBehaviour {
 		HighlightArrow(IsFarAway ? ActualSide : Side.None);
 		//if casting spell
 		if (IsFarAway && ActualSide == Side.Up) {
-			MageControlListener.WantCast();
+			PanelOrbToControl.GetComponent<PanelOrb>().WantCast();
 		} else {
-			MageControlListener.DontWantCast();
+			PanelOrbToControl.GetComponent<PanelOrb>().DontWantCast();
 		}
 	}
 
@@ -106,15 +103,15 @@ public class TouchMageController : MonoBehaviour {
 			switch (ActualSide) {
 				case Side.Left: 
 				case Side.Right: {
-					MageControlListener.SwapSpell(ActualSide);
+					PanelOrbToControl.GetComponent<PanelOrb>().SwapSpell(ActualSide);
 					break;
 				}
 				case Side.Down: {
-					MageControlListener.Drop();
+					PanelOrbToControl.GetComponent<PanelOrb>().Drop();
 					break;
 				}
 				case Side.Up: {
-					MageControlListener.Cast(Delta);
+					PanelOrbToControl.GetComponent<PanelOrb>().Cast(Delta);
 					break;
 				}
 			}

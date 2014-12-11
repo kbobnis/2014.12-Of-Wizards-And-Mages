@@ -8,19 +8,16 @@ public delegate void LoadSprite(Sprite s);
 
 public class SpriteManager : MonoBehaviour{
 
-	public static Sprite FireballIcon;
-	public static Sprite FireballAnimation;
-	public static Sprite FireballExplode;
+	public static Sprite LasiaAlive, LasiaDead;
+	public static Sprite ZlyDementor, ZlyDementorDead;
+	public static Sprite Orb, OrbDead;
+	public static Sprite CardBack, CardBackDead;
 
-	public static Sprite ZombieIcon;
-	public static Sprite ZombieAnimation;
-	public static Sprite ZombieAttack;
+	public static Sprite FireballIcon, FireballAnimation, FireballExplode;
+	public static Sprite ZombieIcon, ZombieAnimation, ZombieAttack;
+	public static Sprite IceIcon, IceAnimation, IceExplode;
+	public static Sprite MudIcon, MudEffect, MudExplode;
 
-	public static Sprite IceIcon;
-	public static Sprite IceAnimation;
-	public static Sprite IceExplode;
-
-	public static Dictionary<BackgroundType, Sprite> Backgrounds = new Dictionary<BackgroundType, Sprite>();
 
 	static SpriteManager(){
 		FireballIcon = Resources.Load<Sprite>("Images/fireballIcon");
@@ -35,11 +32,26 @@ public class SpriteManager : MonoBehaviour{
 		IceAnimation = Resources.Load<Sprite>("Images/iceAnimation");
 		IceExplode = Resources.Load<Sprite>("Images/iceExplode");
 
-		Backgrounds.Add(BackgroundType.ROAD, Resources.Load<Sprite>("Images/Backgrounds/road"));
+		LasiaAlive = Resources.Load<Sprite>("Images/lasia");
+		LasiaDead = Resources.Load<Sprite>("Images/lasiaDead");
+
+		ZlyDementor = Resources.Load<Sprite>("Images/zlyDementor");
+		ZlyDementorDead = Resources.Load<Sprite>("Images/zlyDementorDead");
+
+		Orb = Resources.Load<Sprite>("Images/orb");
+		OrbDead = Resources.Load<Sprite>("Images/orbDead");
+
+		CardBack = Resources.Load<Sprite>("Images/cardBack");
+		CardBackDead = Resources.Load<Sprite>("Images/cardBackDead");
+
+		MudIcon = Resources.Load<Sprite>("Images/mudIcon");
+		MudEffect = Resources.Load<Sprite>("Images/mudEffect");
+		MudExplode = Resources.Load<Sprite>("Images/mudExplode");
 	}
 
 }
 
-public enum BackgroundType {
-	ROAD
+public enum AnimationType {
+	Card, OnBoard, Explode, Dead
+
 }

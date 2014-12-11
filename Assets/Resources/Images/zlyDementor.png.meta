@@ -1,8 +1,9 @@
 fileFormatVersion: 2
-guid: 6cdf6634d6f1a5542bd129d0c9e6f634
+guid: b6870cca6da00c847bb3d0331d167ce5
 TextureImporter:
   fileIDToRecycleName:
     21300000: zlydementor
+    21300002: zlyDementor
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0

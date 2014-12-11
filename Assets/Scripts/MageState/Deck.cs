@@ -3,14 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Deck {
-	private List<Card> Cards;
+	private List<SpellCard> Cards;
 
-	public Deck(List<Card> list) {
+	public Deck(List<SpellCard> list) {
 		Cards = list;
 	}
 
-	public Card TopCard() {
-		Card c = null;
+	public SpellCard TakeAndRemoveTopCard() {
+		SpellCard c = null;
 		if (Cards.Count > 0) {
 			c = Cards[0];
 			Cards.Remove(c);

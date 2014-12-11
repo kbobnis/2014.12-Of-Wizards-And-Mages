@@ -8,7 +8,6 @@ public class DestroyAfter : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		Debug.Log("time.time: " + Time.time);
 		if (Time.time > Delay + StartCount) {
 			Destroy(gameObject);
 		}

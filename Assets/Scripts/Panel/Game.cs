@@ -9,51 +9,40 @@ public class Game : MonoBehaviour {
 	public GameObject PanelMinigame;
 	public Camera Camera;
 
-	public List<Card> Spells = new List<Card>();
+	public List<SpellCard> Spells = new List<SpellCard>();
 	
-	private MageState MageState;
+	private OrbState MageState;
 
 	void Awake () {
 		Me = this;
 
-		Spells.Add(new Card("Fireball", 5, SpriteManager.FireballIcon,  /*after hitting board */(GameObject spellGO, Vector3 direction) => {
-			spellGO.AddComponent<SpriteRenderer>().sprite = SpriteManager.FireballAnimation;
-			spellGO.AddComponent<Mover>().Prepare(direction, 80);
-		}, (GameObject spellGO, GameObject theHit) => {
-				spellGO.AddComponent<DestroyAfter>().Prepare(1);
-				spellGO.AddComponent<ImageChanger>().Prepare(SpriteManager.FireballExplode, 0.4f);
-				theHit.GetComponent<Health>().ReceiveDamage(5);
-		}));
-		Spells.Add(new Card("Zombie", 6, SpriteManager.ZombieIcon, (GameObject spellGO, Vector3 direction) => {
-			spellGO.AddComponent<SpriteRenderer>().sprite = SpriteManager.ZombieAnimation;
-			spellGO.AddComponent<Mover>().Prepare(direction, 40);
-			spellGO.AddComponent<Health>().ReceiveDamage(-5);
-			}, (GameObject spellGO2, GameObject theHit) => {
-				spellGO2.AddComponent<ImageChanger>().Prepare(SpriteManager.ZombieAttack, 0.2f);
-				theHit.GetComponent<Health>().ReceiveDamage(2);
-			}
-		));
-		Spells.Add(new Card("Ice bolt", 4, SpriteManager.IceIcon, (GameObject spellGO, Vector3 direction) => {
-			spellGO.AddComponent<SpriteRenderer>().sprite = SpriteManager.IceAnimation;
-			spellGO.AddComponent<Mover>().Prepare(direction, 100);
-			spellGO.AddComponent<FreezingEffect>().Prepare(0.4f, 0.1f);
-			}, (GameObject spellGO2, GameObject theHit) =>{
-				theHit.GetComponent<Health>().ReceiveDamage(3);
-				spellGO2.AddComponent<ImageChanger>().Prepare(SpriteManager.IceExplode, 1f);
-				spellGO2.AddComponent<DestroyAfter>().Prepare(1);
-		}));
-		
-		List<Deck> decks = new List<Deck>();
-		decks.Add(new Deck(new List<Card>() { Spells[1], Spells[0], Spells[2], Spells[0], Spells[1], Spells[2] }));
-		MageState = new MageState(decks, new OrbState(30), new OrbState(8), new OrbState(8));
+		Dictionary<AnimationType, Sprite> animations = new Dictionary<AnimationType, Sprite>(){ {AnimationType.Card, SpriteManager.FireballIcon}, {AnimationType.OnBoard, SpriteManager.FireballAnimation}, {AnimationType.Explode, SpriteManager.FireballExplode}};
+		Dictionary<EffectType, int> effects = new Dictionary<EffectType, int>(){ {EffectType.Speed, 80}, {EffectType.Damage, 10}, {EffectType.Health, 1 }};
+		Spells.Add(new SpellCard("Fireball", 5, animations, effects));
 
-		List<Deck> opponentsDecks = new List<Deck>();
-		opponentsDecks.Add( new Deck(new List<Card>() { Spells[1], Spells[1], Spells[1], Spells[1] } ));
-		MageState opponentsState = new MageState(opponentsDecks, new OrbState(30), new OrbState(8), new OrbState(8));
+		animations = new Dictionary<AnimationType,Sprite>(){ {AnimationType.Card, SpriteManager.MudIcon}, {AnimationType.OnBoard, SpriteManager.MudEffect}, {AnimationType.Explode, SpriteManager.MudExplode}  };
+		effects = new Dictionary<EffectType,int>(){ {EffectType.Speed, 80}, {EffectType.Damage, 3}, {EffectType.Health, 5}};
+		Spells.Add(new SpellCard("Mud block", 3, animations, effects));
 
-		MinigameBackground minigameBackground = new MinigameBackground(SpriteManager.Backgrounds[BackgroundType.ROAD]);
+		//animations
+		//Spells.Add(new SpellCard("Cart", 2, new Dictionary<AnimationType, Sprite[]>(){}, new Dictionary<EffectType, value>(){ ET.speed => 180, ET.damage => 1, ET.health => 1}));
+		//Spells.Add(new SpellCard("Shield", 2, new Dictionary<AnimationType, Sprite[]>(){}, new Dictionary<EffectType, value>(){ ET.drawShape => 10, ET.health => 10}));
 
-		PanelMinigame.GetComponent<PanelMinigame>().Prepare(MageState, MageState.Decks[0], opponentsState, opponentsState.Decks[0], minigameBackground);
+		Deck deck = new Deck(new List<SpellCard>() { Spells[1], Spells[0], Spells[1], Spells[0], Spells[1], Spells[1] });
+		animations = new Dictionary<AnimationType, Sprite>() { { AnimationType.OnBoard, SpriteManager.CardBack}, { AnimationType.Dead, SpriteManager.CardBackDead} };
+		OrbState DeckLeft = new OrbState(deck, 10, animations, null, null);
+		animations = new Dictionary<AnimationType,Sprite>(){ { AnimationType.OnBoard, SpriteManager.Orb}, {AnimationType.Dead, SpriteManager.OrbDead}};
+		OrbState LeftOrbState = new OrbState(null, 8, animations, DeckLeft, null);
+
+		animations = new Dictionary<AnimationType, Sprite>() { { AnimationType.OnBoard, SpriteManager.CardBack }, { AnimationType.Dead, SpriteManager.CardBackDead } };
+		OrbState DeckRight = new OrbState(deck, 10, animations, null, null);
+		animations = new Dictionary<AnimationType, Sprite>() { { AnimationType.OnBoard, SpriteManager.Orb }, { AnimationType.Dead, SpriteManager.OrbDead } };
+		OrbState RightOrbState = new OrbState(null, 8, animations, null, DeckRight);
+
+		animations = new Dictionary<AnimationType, Sprite> { { AnimationType.OnBoard, SpriteManager.LasiaAlive }, { AnimationType.Dead, SpriteManager.LasiaDead } };
+		MageState = new OrbState(null, 30, animations, LeftOrbState, RightOrbState);
+
+		PanelMinigame.GetComponent<PanelMinigame>().Prepare(MageState);
 
 	}
 
