@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e2d4ed5f0e8b6a74b99de34c9c5b4287
+guid: 412661729ae833e4484809b377e826c9
 TextureImporter:
   fileIDToRecycleName:
     21300000: healthDrop
@@ -26,9 +26,9 @@ TextureImporter:
   maxTextureSize: 1024
   textureSettings:
     filterMode: 0
-    aniso: 1
+    aniso: -1
     mipBias: -1
-    wrapMode: 1
+    wrapMode: -1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50

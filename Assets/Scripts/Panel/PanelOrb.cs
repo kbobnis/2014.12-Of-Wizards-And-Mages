@@ -95,10 +95,10 @@ public class PanelOrb : MonoBehaviour {
 
 	public void Cast(Vector3 direction) {
 		Debug.Log("casting spell");
-		GameObject spell = new GameObject("spell: " + ActualCard.Name);
+		GameObject spell = (GameObject)Instantiate(Game.Me.PanelMinigame.GetComponent<PanelMinigame>().PanelSpells.GetComponent<PanelSpells>().SpellPrefab);
+		spell.SetActive(true);
 		spell.transform.position = transform.position;
-		spell.AddComponent<PanelSpell>().Prepare(ActualCard, direction);
-		
+		spell.GetComponent<PanelSpell>().Prepare(ActualCard, direction);
 		
 		ActualCard = null;
 		TakeNextCard();

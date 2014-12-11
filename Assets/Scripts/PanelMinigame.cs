@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class PanelMinigame : MonoBehaviour {
 
-	public GameObject PanelMageAndOrbsTop, PanelMageAndOrbsBottom;
+	public GameObject PanelMageAndOrbsTop, PanelMageAndOrbsBottom, PanelSpells;
 
 	internal void Prepare(OrbState yourState) {
 

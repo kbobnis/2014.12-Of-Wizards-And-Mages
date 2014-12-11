@@ -17,7 +17,7 @@ public class Game : MonoBehaviour {
 		Me = this;
 
 		Dictionary<AnimationType, Sprite> animations = new Dictionary<AnimationType, Sprite>(){ {AnimationType.Card, SpriteManager.FireballIcon}, {AnimationType.OnBoard, SpriteManager.FireballAnimation}, {AnimationType.Explode, SpriteManager.FireballExplode}};
-		Dictionary<EffectType, int> effects = new Dictionary<EffectType, int>(){ {EffectType.Speed, 80}, {EffectType.Damage, 10}, {EffectType.Health, 1 }};
+		Dictionary<EffectType, int> effects = new Dictionary<EffectType, int>(){ {EffectType.Speed, 180}, {EffectType.Damage, 10}, {EffectType.Health, 1 }};
 		Spells.Add(new SpellCard("Fireball", 5, animations, effects));
 
 		animations = new Dictionary<AnimationType,Sprite>(){ {AnimationType.Card, SpriteManager.MudIcon}, {AnimationType.OnBoard, SpriteManager.MudEffect}, {AnimationType.Explode, SpriteManager.MudExplode}  };
