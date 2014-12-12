@@ -12,6 +12,10 @@ public class PanelMageAndOrbs : MonoBehaviour {
 
 	internal void Prepare(OrbState mageState) {
 
-		MageOrb.GetComponent<PanelOrb>().Prepare(mageState.Deck, mageState.Animations, mageState.Health, mageState.LeftOrbState, mageState.RightOrbState);
+		MageOrb.GetComponent<PanelOrb>().Prepare(mageState.Deck, mageState.FromCard, mageState.LeftOrbState, mageState.RightOrbState);
+
+		if (GetComponent<TouchMageController>() == null) {
+
+		}
 	}
 }

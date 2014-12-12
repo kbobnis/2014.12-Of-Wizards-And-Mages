@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 public class OrbState  {
 
+	public SpellCard FromCard;
 	private Deck _Deck;
-	private int _Health;
 	private OrbState _LeftOrbState, _RightOrbState;
 	public Dictionary<AnimationType, Sprite> Animations;
 
@@ -16,17 +16,12 @@ public class OrbState  {
 		get { return _RightOrbState; }
 	}
 
-	public int Health {
-		get { return _Health; }
-	}
-
 	public Deck Deck {
 		get { return _Deck; }
 	}
-	public OrbState(Deck deck, int health, Dictionary<AnimationType, Sprite> animations, OrbState leftOrbState, OrbState rightOrbState) {
+	public OrbState(Deck deck, SpellCard fromCard, OrbState leftOrbState, OrbState rightOrbState) {
 		_Deck = deck;
-		Animations = animations;
-		_Health = health;
+		FromCard = fromCard;
 		_LeftOrbState = leftOrbState;
 		_RightOrbState = rightOrbState;
 	}

@@ -3,13 +3,14 @@ using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class PanelOrb : MonoBehaviour {
+public class PanelOrb : PanelSpell {
 
-	public GameObject ImageBack, ImageSpell, PanelHealth, LeftOrb, RightOrb;
+	public GameObject ImageBack, ImageSpell, LeftOrb, RightOrb;
+
+	public bool HideActualCard;
 
 	private SpellCard _ActualCard;
 	private Deck Deck;
-	public Dictionary<AnimationType, Sprite> Animations;
 
 	internal SpellCard ActualCard{
 		get {
@@ -18,34 +19,32 @@ public class PanelOrb : MonoBehaviour {
 		set {
 			_ActualCard = value;
 			ImageSpell.GetComponent<SpriteRenderer>().sprite = _ActualCard==null ? null :_ActualCard.Animations[AnimationType.Card];
-			ImageSpell.GetComponent<SpriteRenderer>().enabled = _ActualCard != null;
+			ImageSpell.GetComponent<SpriteRenderer>().enabled = _ActualCard != null && !HideActualCard;
 		}
 	}
 
 	void Update() {
-		if (Animations != null) {
-			bool isDead = PanelHealth.GetComponent<PanelHealth>().IsDead();
-			GetComponent<SpriteRenderer>().sprite = Animations[isDead ? AnimationType.Dead : AnimationType.OnBoard];
-			ImageSpell.SetActive(!isDead);
-			ImageBack.SetActive(!isDead);
-		}
+		base.MyUpdate();
+		ImageSpell.SetActive(Health > 0);
+		ImageBack.SetActive(Health > 0);
 	}
 			
 
-	internal void Prepare(Deck deck, Dictionary<AnimationType, Sprite> animations, int health, OrbState leftOrb, OrbState rightOrb) {
-		Animations = animations;
+	internal void Prepare(Deck deck, SpellCard c, OrbState leftOrb, OrbState rightOrb) {
+		base.Prepare(c, new Vector3());
+
 		Deck = deck;
-		PanelHealth.GetComponent<PanelHealth>().Health = health;
+		PanelHealth.GetComponent<PanelHealth>().Health = c.Effects[EffectType.Health];
 		if (LeftOrb != null){
 			if (leftOrb != null) {
-				LeftOrb.GetComponent<PanelOrb>().Prepare(leftOrb.Deck, leftOrb.Animations, leftOrb.Health, leftOrb.LeftOrbState, leftOrb.RightOrbState);
+				LeftOrb.GetComponent<PanelOrb>().Prepare(leftOrb.Deck, leftOrb.FromCard, leftOrb.LeftOrbState, leftOrb.RightOrbState);
 			} else {
 				LeftOrb.SetActive(false);
 			}
 		} 
 		if (RightOrb != null){
 			if (rightOrb != null) {
-				RightOrb.GetComponent<PanelOrb>().Prepare(rightOrb.Deck, rightOrb.Animations, rightOrb.Health, rightOrb.LeftOrbState, rightOrb.RightOrbState);
+				RightOrb.GetComponent<PanelOrb>().Prepare(rightOrb.Deck, rightOrb.FromCard, rightOrb.LeftOrbState, rightOrb.RightOrbState);
 			} else {
 				RightOrb.SetActive(false);
 			}
@@ -53,16 +52,7 @@ public class PanelOrb : MonoBehaviour {
 		TakeNextCard();
 	}
 
-	void OnTriggerEnter2D(Collider2D other) {
-		Debug.Log("on trigger enter: " + gameObject.name + ", other: " + other.gameObject.name);
-		//other.GetComponent<PanelOrb>().Card.TriggerAction(other.gameObject, gameObject);
-	}
-	void OnTriggerStay2D(Collider2D other) {
-		Debug.Log("on trigger stay: " + gameObject.name + ", other: " + other.gameObject.name);
-	}
-	void OnTriggerExit2D(Collider2D other) {
-		Debug.Log("on trigger exit: " + gameObject.name + ", other: " + other.gameObject.name);
-	}
+
 
 	public void SwapSpell(Side s) {
 		Debug.Log("SwapSpell, " + s);
@@ -94,18 +84,23 @@ public class PanelOrb : MonoBehaviour {
 	}
 
 	public void Cast(Vector3 direction) {
-		Debug.Log("casting spell");
-		GameObject spell = (GameObject)Instantiate(Game.Me.PanelMinigame.GetComponent<PanelMinigame>().PanelSpells.GetComponent<PanelSpells>().SpellPrefab);
-		spell.SetActive(true);
-		spell.transform.position = transform.position;
-		spell.GetComponent<PanelSpell>().Prepare(ActualCard, direction);
-		
-		ActualCard = null;
-		TakeNextCard();
+		if (ActualCard != null) {
+			GameObject spell = (GameObject)Instantiate(Game.Me.PanelMinigame.GetComponent<PanelMinigame>().PanelSpells.GetComponent<PanelSpells>().SpellPrefab);
+			spell.SetActive(true);
+			spell.transform.parent = Game.Me.PanelMinigame.GetComponent<PanelMinigame>().PanelSpells.transform;
+			spell.transform.position = ImageSpell.transform.position;
+
+			spell.GetComponent<PanelSpell>().Prepare(ActualCard, direction);
+
+			ActualCard = null;
+			TakeNextCard();
+		}
 	}
 
 	public void WantCast() {
-		ImageSpell.GetComponent<SpriteRenderer>().sprite = ActualCard.Animations[AnimationType.OnBoard];
+		if (ActualCard != null) {
+			ImageSpell.GetComponent<SpriteRenderer>().sprite = ActualCard.Animations[AnimationType.OnBoard];
+		}
 	}
 
 	public void DontWantCast() {
@@ -127,7 +122,6 @@ public class PanelOrb : MonoBehaviour {
 				ActualCard = Deck.TakeAndRemoveTopCard();
 			}
 		}
-		Debug.Log("taking next card with: " + gameObject.name + ", next card is : " + (ActualCard!=null?ActualCard.Name:"none"));
 	}
 
 	private void TakeNextCardFrom(Side s) {

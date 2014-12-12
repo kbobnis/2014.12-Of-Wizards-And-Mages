@@ -7,7 +7,7 @@ using System;
 
 public class TouchMageController : MonoBehaviour {
 
-	public GameObject ArrowUp, ArrowDown, ArrowLeft, ArrowRight, PanelOrbToControl;
+	public GameObject ArrowUp, ArrowDown, ArrowLeft, ArrowRight, ImageToMove;
 
 	private Vector3 StartDrag;
 	private bool IsDown;
@@ -73,7 +73,7 @@ public class TouchMageController : MonoBehaviour {
 	private void Drag(){
 		Vector3 now = Camera.main.ScreenToWorldPoint( Input.mousePosition );
 		Delta = now - StartDrag;
-		transform.position = now;
+		ImageToMove.transform.position = now;
 
 		float distance = Mathf.Abs(Delta.x) > Mathf.Abs(Delta.y) ? Mathf.Abs(Delta.x) : Mathf.Abs(Delta.y);
 		IsFarAway = distance > 0.3f;
@@ -86,16 +86,16 @@ public class TouchMageController : MonoBehaviour {
 		HighlightArrow(IsFarAway ? ActualSide : Side.None);
 		//if casting spell
 		if (IsFarAway && ActualSide == Side.Up) {
-			PanelOrbToControl.GetComponent<PanelOrb>().WantCast();
+			GetComponent<PanelOrb>().WantCast();
 		} else {
-			PanelOrbToControl.GetComponent<PanelOrb>().DontWantCast();
+			GetComponent<PanelOrb>().DontWantCast();
 		}
 	}
 
 
 	public void Release() {
-		transform.localPosition = new Vector3();
-		GetComponent<CircleCollider2D>().enabled = false; //to not collide with the spell
+		ImageToMove.transform.localPosition = new Vector3();
+		GetComponent<Collider2D>().enabled = false; //to not collide with the spell
 		IsDown = false;
 		
 		SetArrowsActive(false);
@@ -103,21 +103,20 @@ public class TouchMageController : MonoBehaviour {
 			switch (ActualSide) {
 				case Side.Left: 
 				case Side.Right: {
-					PanelOrbToControl.GetComponent<PanelOrb>().SwapSpell(ActualSide);
+					GetComponent<PanelOrb>().SwapSpell(ActualSide);
 					break;
 				}
 				case Side.Down: {
-					PanelOrbToControl.GetComponent<PanelOrb>().Drop();
+					GetComponent<PanelOrb>().Drop();
 					break;
 				}
 				case Side.Up: {
-					PanelOrbToControl.GetComponent<PanelOrb>().Cast(Delta);
+					GetComponent<PanelOrb>().Cast(Delta);
 					break;
 				}
 			}
 		}
-		Delta.Set(0, 0, 0);
-		GetComponent<CircleCollider2D>().enabled = true;
+		GetComponent<Collider2D>().enabled = true;
 
 	}
 }

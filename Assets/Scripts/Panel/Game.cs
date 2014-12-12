@@ -24,26 +24,44 @@ public class Game : MonoBehaviour {
 		effects = new Dictionary<EffectType,int>(){ {EffectType.Speed, 80}, {EffectType.Damage, 3}, {EffectType.Health, 5}};
 		Spells.Add(new SpellCard("Mud block", 3, animations, effects));
 
-		//animations
-		//Spells.Add(new SpellCard("Cart", 2, new Dictionary<AnimationType, Sprite[]>(){}, new Dictionary<EffectType, value>(){ ET.speed => 180, ET.damage => 1, ET.health => 1}));
-		//Spells.Add(new SpellCard("Shield", 2, new Dictionary<AnimationType, Sprite[]>(){}, new Dictionary<EffectType, value>(){ ET.drawShape => 10, ET.health => 10}));
+		animations = new Dictionary<AnimationType, Sprite>() { { AnimationType.Card, SpriteManager.IceIcon}, { AnimationType.OnBoard, SpriteManager.IceAnimation}, { AnimationType.Explode, SpriteManager.IceExplode } };
+		effects = new Dictionary<EffectType, int>() { { EffectType.Speed, 220 }, { EffectType.Damage, 1 }, { EffectType.Health, 20 } };
+		Spells.Add(new SpellCard("Ice lance", 3, animations, effects));
 
-		Deck deck = new Deck(new List<SpellCard>() { Spells[1], Spells[0], Spells[1], Spells[0], Spells[1], Spells[1] });
+		Deck deck = new Deck(new List<SpellCard>() { Spells[2], Spells[1], Spells[0], Spells[2], Spells[1], Spells[0], Spells[1], Spells[1], Spells[2] });
+		
 		animations = new Dictionary<AnimationType, Sprite>() { { AnimationType.OnBoard, SpriteManager.CardBack}, { AnimationType.Dead, SpriteManager.CardBackDead} };
-		OrbState DeckLeft = new OrbState(deck, 10, animations, null, null);
-		animations = new Dictionary<AnimationType,Sprite>(){ { AnimationType.OnBoard, SpriteManager.Orb}, {AnimationType.Dead, SpriteManager.OrbDead}};
-		OrbState LeftOrbState = new OrbState(null, 8, animations, DeckLeft, null);
+		effects = new Dictionary<EffectType, int>() {  { EffectType.Health, 20 } };
+		SpellCard spell = new SpellCard("Deck", 10, animations, effects);
+		OrbState DeckLeft = new OrbState(deck, spell, null, null);
+
+		animations = new Dictionary<AnimationType, Sprite>() { { AnimationType.OnBoard, SpriteManager.Orb }, { AnimationType.Dead, SpriteManager.OrbDead } }; effects = new Dictionary<EffectType, int>() { { EffectType.Damage, 1 }, { EffectType.Health, 20 } };
+		effects = new Dictionary<EffectType, int>() { { EffectType.Health, 8 } };
+		spell = new SpellCard("Orb", 10, animations, effects);
+		OrbState LeftOrbState = new OrbState(null, spell, DeckLeft, null);
 
 		animations = new Dictionary<AnimationType, Sprite>() { { AnimationType.OnBoard, SpriteManager.CardBack }, { AnimationType.Dead, SpriteManager.CardBackDead } };
-		OrbState DeckRight = new OrbState(deck, 10, animations, null, null);
+		effects = new Dictionary<EffectType, int>() { { EffectType.Health, 8 } };
+		spell = new SpellCard("Deck", 10, animations, effects);
+		OrbState DeckRight = new OrbState(deck, spell, null, null);
+
 		animations = new Dictionary<AnimationType, Sprite>() { { AnimationType.OnBoard, SpriteManager.Orb }, { AnimationType.Dead, SpriteManager.OrbDead } };
-		OrbState RightOrbState = new OrbState(null, 8, animations, null, DeckRight);
+		effects = new Dictionary<EffectType, int>() { { EffectType.Health, 8 } };
+		spell = new SpellCard("Deck", 10, animations, effects);
+		OrbState RightOrbState = new OrbState(null, spell, null, DeckRight);
 
-		animations = new Dictionary<AnimationType, Sprite> { { AnimationType.OnBoard, SpriteManager.LasiaAlive }, { AnimationType.Dead, SpriteManager.LasiaDead } };
-		MageState = new OrbState(null, 30, animations, LeftOrbState, RightOrbState);
+		animations = new Dictionary<AnimationType, Sprite>() { { AnimationType.Card, SpriteManager.LasiaAlive }, { AnimationType.OnBoard, SpriteManager.LasiaAlive }, { AnimationType.Explode, SpriteManager.LasiaDead } };
+		effects = new Dictionary<EffectType, int>() { { EffectType.Health, 30 } };
+		SpellCard lasia = new SpellCard("Lasia", 10, animations, effects);
+		MageState = new OrbState(null, lasia, LeftOrbState, RightOrbState);
 
-		PanelMinigame.GetComponent<PanelMinigame>().Prepare(MageState);
+		animations = new Dictionary<AnimationType, Sprite>() { { AnimationType.Card, SpriteManager.ZlyDementor }, { AnimationType.OnBoard, SpriteManager.ZlyDementor }, { AnimationType.Explode, SpriteManager.ZlyDementorDead } };
+		Dictionary<EffectType, int>  dEffects = new Dictionary<EffectType, int>() {  { EffectType.Health, 30 } };
+		SpellCard dementor = new SpellCard("Dementor", 10, animations, dEffects);
+		OrbState LeftOrbStateD = new OrbState(deck, spell, DeckLeft, null);
+		OrbState RightOrbStateD = new OrbState(deck, spell, DeckLeft, null);
+		OrbState oponentState = new OrbState(null, dementor, LeftOrbStateD, RightOrbStateD);
 
+		PanelMinigame.GetComponent<PanelMinigame>().Prepare(MageState, oponentState);
 	}
-
 }
