@@ -41,8 +41,16 @@ public class Bullet : MonoBehaviour {
 		}
 		PanelMinigame pmini = other.gameObject.GetComponent<PanelMinigame>();
 		if (pmini != null) {
-			Debug.Log("Bullet entered collision with panel minigame");
-			Direction.x = -Direction.x;
+
+			//left right will bounce
+			if (pmini.LeftCollider == other || pmini.RightCollider == other) {
+				Direction.x = -Direction.x;
+			}
+
+			//top bottom will blow up
+			if (pmini.TopCollider == other || pmini.BottomCollider == other) {
+				BlowUp();
+			}
 		}
 		Bullet b = other.GetComponent<Bullet>();
 		if (b != null) {

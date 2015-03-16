@@ -8,8 +8,6 @@ using UnityEngine.UI;
 
 class BlowUp : MonoBehaviour{
 
-	
-
 	internal void Prepare(Spell Spell) {
 		Destroy(gameObject.GetComponent<Bullet>());
 		GetComponent<Image>().color = Color.black;

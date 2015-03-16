@@ -19,8 +19,8 @@ public class Game : MonoBehaviour {
 	IEnumerator StartingGame() {
 		yield return new WaitForSeconds(0.5f);
 		//nazwa, koszt, wielkość pocisku, szybkość lotu, wie
-		Spells.Add(new Spell("Fireball", 1, new Dictionary<FlyingParam, int>(){  {FlyingParam.Speed, 40}, {FlyingParam.Damage, 3} }, new Dictionary<AfterHitParam, int>(){ { AfterHitParam.Damage, 1}, {AfterHitParam.Time, 2}} ));
-		Spells.Add(new Spell("Ice", 2, new Dictionary<FlyingParam, int>(){ {FlyingParam.Speed, 60}, {FlyingParam.Damage, 3} }, new Dictionary<AfterHitParam, int>(){ { AfterHitParam.Damage, 1}, {AfterHitParam.Time, 2}, {AfterHitParam.SlowDown, 1}} ));
+		Spells.Add(new Spell("Fireball", 10, new Dictionary<FlyingParam, int>(){  {FlyingParam.Speed, 40}, {FlyingParam.Damage, 10} }, new Dictionary<AfterHitParam, int>(){ { AfterHitParam.Damage, 10}, {AfterHitParam.Time, 2}} ));
+		Spells.Add(new Spell("Ice", 20, new Dictionary<FlyingParam, int>(){ {FlyingParam.Speed, 60}, {FlyingParam.Damage, 10} }, new Dictionary<AfterHitParam, int>(){ { AfterHitParam.Damage, 20}, {AfterHitParam.Time, 2}, {AfterHitParam.SlowDown, 1}} ));
 
 		Mage ivaAllesi = new Mage("Iva Alessi", MageClass.Thenacurviat);
 		ivaAllesi.LeftHand = Spells[0];

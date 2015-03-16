@@ -1,8 +1,8 @@
 fileFormatVersion: 2
-guid: 0aebff81a87784c42bee0493c148c96d
+guid: b541aea5c0db882469aa7de718d7dac7
 TextureImporter:
   fileIDToRecycleName:
-    21300000: runa.lewa
+    21300000: fire
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -26,9 +26,9 @@ TextureImporter:
   maxTextureSize: 1024
   textureSettings:
     filterMode: 0
-    aniso: 1
+    aniso: -1
     mipBias: -1
-    wrapMode: 1
+    wrapMode: -1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50

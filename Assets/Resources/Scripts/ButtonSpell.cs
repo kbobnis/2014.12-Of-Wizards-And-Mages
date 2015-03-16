@@ -6,7 +6,7 @@ using System;
 
 public class ButtonSpell : MonoBehaviour {
 
-	public GameObject ImageSpellCasting;
+	public GameObject ImageSpellCasting, ImageSpellReady;
 	public Spell Spell;
 	private Mage Caster;
 	
@@ -47,13 +47,19 @@ public class ButtonSpell : MonoBehaviour {
 
 	}
 
+	void Update() {
+		if (Caster != null) {
+			ImageSpellReady.SetActive(Caster.ActualMana >= Spell.Cost);
+		}
+	}
+
 	void PointerUp() {
 
 		try {
 			ImageSpellCasting.SetActive(false);
 			if (WillCast && !Casted) {
 				if (Caster.CanAfford(Spell)) {
-					CastListener.CastIt(Caster, Spell, StartingMousePos, Direction);
+					CastListener.CastIt(Caster, Spell, GetComponent<Transform>().position, Direction);
 					Casted = true;
 				}
 			}
@@ -66,7 +72,7 @@ public class ButtonSpell : MonoBehaviour {
 	void PointerDown() {
 		Casted = false ;
 		WillCast = false;
-		StartingMousePos = GetComponent<Transform>().position; //Input.mousePosition;
+		StartingMousePos = Input.mousePosition;
 		ImageSpellCasting.SetActive(true);
 		ImageSpellCasting.GetComponent<Image>().color = Color.black;
 		PointerMove();
@@ -78,7 +84,7 @@ public class ButtonSpell : MonoBehaviour {
 			int dX = (int)Input.mousePosition.x;
 			int dY = (int)Input.mousePosition.y;
 			Distance = (Mathf.Abs(dX - StartingMousePos.x) + Mathf.Abs(dY - StartingMousePos.y)) / (float)Screen.width;
-			Direction = new Vector2((dX - StartingMousePos.x), (dY - StartingMousePos.y));
+			Direction = new Vector2((dX - GetComponent<Transform>().position.x), (dY - GetComponent<Transform>().position.y));
 			Direction.Normalize();
 
 			ImageSpellCasting.GetComponent<Image>().color = Distance > 0.1f ? Color.green : Color.black;

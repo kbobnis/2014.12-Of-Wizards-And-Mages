@@ -1,8 +1,8 @@
 fileFormatVersion: 2
-guid: 3831c4ff7c528724897b533a7f956c64
+guid: c23ce431c287dbb4883eb0516176c862
 TextureImporter:
   fileIDToRecycleName:
-    21300000: spelliconscomplete
+    21300000: enemy
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -25,10 +25,10 @@ TextureImporter:
   textureFormat: -1
   maxTextureSize: 1024
   textureSettings:
-    filterMode: 0
-    aniso: 1
+    filterMode: -1
+    aniso: -1
     mipBias: -1
-    wrapMode: 1
+    wrapMode: -1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
