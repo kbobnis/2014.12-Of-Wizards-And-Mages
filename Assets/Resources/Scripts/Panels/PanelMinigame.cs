@@ -19,18 +19,14 @@ public class PanelMinigame : MonoBehaviour, CastListener {
 		if (PanelMageTop != null) {
 			PanelMageTop.GetComponent<PanelMage>().Prepare(mageTop, this);
 		}
-	}
-
-	void Update() {
-		if (Bullets.Count > 0) {
-			Bullet b = Bullets[0].GetComponent<Bullet>();
-			RectTransform rt = Bullets[0].GetComponent<RectTransform>();
-			Debug.Log("bullet: " + Bullets[0].transform.position + ", width: " + rt.GetWidth() + ", height: " + rt.GetHeight() );
-		}
+		BoxCollider[] bcs = GetComponents<BoxCollider>();
+		bcs[0].center = new Vector3(360 * AspectRatioKeeper.ActualScale / 2, 0);
+		bcs[1].center = new Vector3(-360 * AspectRatioKeeper.ActualScale / 2, 0);
 	}
 
 	public void CastIt(Mage caster, Spell spell, Vector2 from, Vector2 direction) {
-		Debug.Log("Casting spell " + spell.Name + ", by: " + caster.Name + ", direction: " + direction);
+		Debug.Log("Casting spell " + spell.Name + ", by: " + caster.Name + ", he has " + caster.ActualMana + " mana , direction: " + direction);
+
 		caster._ActualMana -= spell.Cost;
 		BulletPrefab.SetActive(true);
 		GameObject bulletTmp = Instantiate(BulletPrefab) as GameObject;

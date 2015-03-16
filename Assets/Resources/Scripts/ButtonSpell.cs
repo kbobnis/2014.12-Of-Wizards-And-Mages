@@ -16,6 +16,7 @@ public class ButtonSpell : MonoBehaviour {
 	bool WillCast;
 
 	CastListener CastListener;
+	private bool Casted;
 
 	public void Prepare(Mage caster, Spell spell, CastListener castListener) {
 		CastListener = castListener;
@@ -49,38 +50,44 @@ public class ButtonSpell : MonoBehaviour {
 	void PointerUp() {
 
 		try {
-
 			ImageSpellCasting.SetActive(false);
-			if (WillCast) {
-
+			if (WillCast && !Casted) {
 				if (Caster.CanAfford(Spell)) {
 					CastListener.CastIt(Caster, Spell, StartingMousePos, Direction);
-				} else {
+					Casted = true;
 				}
 			}
+			
 		} catch (Exception e) {
 			Debug.Log("Exception: " + e);
-
 		}
 	}
 	
 	void PointerDown() {
+		Casted = false ;
 		WillCast = false;
-		StartingMousePos = Input.mousePosition;
+		StartingMousePos = GetComponent<Transform>().position; //Input.mousePosition;
 		ImageSpellCasting.SetActive(true);
 		ImageSpellCasting.GetComponent<Image>().color = Color.black;
 		PointerMove();
 	}
 
 	void PointerMove() {
-		int dX = (int)Input.mousePosition.x;
-		int dY = (int)Input.mousePosition.y;
-		Distance = ( Mathf.Abs(dX - StartingMousePos.x) + Mathf.Abs(dY - StartingMousePos.y)) / (float)Screen.width;
-		Direction = new Vector2((dX-StartingMousePos.x), (dY-StartingMousePos.y));
-		Direction.Normalize();
 
-		ImageSpellCasting.GetComponent<Image>().color = Distance > 0.05f?Color.green:Color.black;
-		WillCast = Distance > 0.05f;
-		ImageSpellCasting.transform.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+		if (!Casted) {
+			int dX = (int)Input.mousePosition.x;
+			int dY = (int)Input.mousePosition.y;
+			Distance = (Mathf.Abs(dX - StartingMousePos.x) + Mathf.Abs(dY - StartingMousePos.y)) / (float)Screen.width;
+			Direction = new Vector2((dX - StartingMousePos.x), (dY - StartingMousePos.y));
+			Direction.Normalize();
+
+			ImageSpellCasting.GetComponent<Image>().color = Distance > 0.1f ? Color.green : Color.black;
+			ImageSpellCasting.transform.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+
+			WillCast = Distance > 0.1f;
+			if (WillCast) {
+				PointerUp();
+			}
+		}
 	}
 }

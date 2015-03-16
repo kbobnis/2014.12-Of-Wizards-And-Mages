@@ -13,10 +13,14 @@ public class Game : MonoBehaviour {
 
 	void Awake() {
 		Me = this;
+		StartCoroutine(StartingGame());
+	}
 
+	IEnumerator StartingGame() {
+		yield return new WaitForSeconds(0.5f);
 		//nazwa, koszt, wielkość pocisku, szybkość lotu, wie
-		Spells.Add(new Spell("Fireball", 1, new Dictionary<FlyingParam, int>(){ {FlyingParam.Size, 2}, {FlyingParam.Speed, 40}, {FlyingParam.Damage, 3} }, new Dictionary<AfterHitParam, int>(){ { AfterHitParam.Damage, 1}, {AfterHitParam.Time, 2}} ));
-		Spells.Add(new Spell("Ice", 2, new Dictionary<FlyingParam, int>(){ {FlyingParam.Size, 4}, {FlyingParam.Speed, 60}, {FlyingParam.Damage, 3} }, new Dictionary<AfterHitParam, int>(){ { AfterHitParam.Damage, 1}, {AfterHitParam.Time, 2}, {AfterHitParam.SlowDown, 1}} ));
+		Spells.Add(new Spell("Fireball", 1, new Dictionary<FlyingParam, int>(){  {FlyingParam.Speed, 40}, {FlyingParam.Damage, 3} }, new Dictionary<AfterHitParam, int>(){ { AfterHitParam.Damage, 1}, {AfterHitParam.Time, 2}} ));
+		Spells.Add(new Spell("Ice", 2, new Dictionary<FlyingParam, int>(){ {FlyingParam.Speed, 60}, {FlyingParam.Damage, 3} }, new Dictionary<AfterHitParam, int>(){ { AfterHitParam.Damage, 1}, {AfterHitParam.Time, 2}, {AfterHitParam.SlowDown, 1}} ));
 
 		Mage ivaAllesi = new Mage("Iva Alessi", MageClass.Thenacurviat);
 		ivaAllesi.LeftHand = Spells[0];
@@ -31,7 +35,6 @@ public class Game : MonoBehaviour {
 }
 
 public enum FlyingParam {
-	Size,
 	Speed,
 	Damage,
 }
@@ -39,6 +42,5 @@ public enum FlyingParam {
 public enum AfterHitParam {
 	Damage,
 	Time,
-	Size,
 	SlowDown,
 }
