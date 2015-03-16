@@ -17,7 +17,7 @@ public class Bullet : MonoBehaviour {
 
 	internal void Prepare(Mage caster, Spell spell, Vector2 from, Vector2 direction) {
 		Spell = spell;
-		Direction = direction * spell.FlyingParams[FlyingParam.Speed];
+		Direction = direction * spell.FlyingParams[FlyingParam.Speed] * AspectRatioKeeper.ActualScale;
 		GetComponent<Image>().sprite = Resources.Load<Sprite>("GUI/" + spell.Name);
 		
 		float w = GetComponent<Image>().sprite.rect.width * AspectRatioKeeper.ActualScale;

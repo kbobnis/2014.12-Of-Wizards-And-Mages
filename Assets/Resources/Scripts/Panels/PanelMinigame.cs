@@ -22,10 +22,15 @@ public class PanelMinigame : MonoBehaviour, CastListener {
 			PanelMageTop.GetComponent<PanelMage>().Prepare(mageTop, this);
 		}
 		LeftCollider.center = new Vector3(360 * AspectRatioKeeper.ActualScale / 2, 0);
+		LeftCollider.size = new Vector3(0, 600 * AspectRatioKeeper.ActualScale, 1);
+
 		RightCollider.center = new Vector3(-360 * AspectRatioKeeper.ActualScale / 2, 0);
+		RightCollider.size = new Vector3(0, 600 * AspectRatioKeeper.ActualScale);
 
 		TopCollider.center = new Vector3(0, -AspectRatioKeeper.ActualScale / 2 * 600);
+		TopCollider.size = new Vector3(360 * AspectRatioKeeper.ActualScale, 0);
 		BottomCollider.center = new Vector3(0, AspectRatioKeeper.ActualScale / 2 * 600);
+		BottomCollider.size = new Vector3(360 * AspectRatioKeeper.ActualScale, 0);
 	}
 
 	public void CastIt(Mage caster, Spell spell, Vector2 from, Vector2 direction) {

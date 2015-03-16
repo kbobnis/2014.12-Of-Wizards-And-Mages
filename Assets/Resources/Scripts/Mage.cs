@@ -60,7 +60,7 @@ public class Mage  {
 
 	private void RegenerateMana(float p) {
 		if (ActualMana < MaxMana) {
-			PercentManaRegenerated += p / (float)MageClass.ManaRegen;
+			PercentManaRegenerated += p / MageClass.ManaRegen;
 		} else {
 			PercentManaRegenerated = 0;
 		}
@@ -75,14 +75,14 @@ public class Mage  {
 
 public class MageClass {
 	public static readonly MageClass Creator = new MageClass(100, 100, 1, 3);
-	public static readonly MageClass Thenacurviat = new MageClass(100, 100, 3, 1);
+	public static readonly MageClass Thenacurviat = new MageClass(100, 100, 3, 0.5f);
 	
 	public readonly int StartingLife;
 	public readonly int StartingMana;
 	public readonly int LifeRegen;
-	public readonly int ManaRegen;
+	public readonly float ManaRegen;
 
-	public MageClass(int life, int mana, int lifeRegen, int manaRegen) {
+	public MageClass(int life, int mana, int lifeRegen, float manaRegen) {
 		StartingLife = life;
 		StartingMana = mana;
 		LifeRegen = lifeRegen;
