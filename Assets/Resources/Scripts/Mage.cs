@@ -70,6 +70,10 @@ public class Mage  {
 			PercentManaRegenerated = 0;
 		}
 	}
+
+	public bool IsDead() {
+		return ActualHealth <= 0;
+	}
 }
 
 

@@ -4,36 +4,29 @@ using System.Collections;
 public class PanelMage : MonoBehaviour {
 
 	public GameObject ButtonSpellLeft, ButtonSpellRight, PanelFlaskLife, PanelFlaskMana, ImageAvatar;
-	private Mage _Mage;
+	private Player _Player;
 
-
-	public Mage Mage {
-		set { _Mage = value; Debug.Log("updating mage value in " + gameObject.name +" "+ value.Name); }
-		get { return _Mage; }
+	public Player Player {
+		set { _Player = value; }
+		get { return _Player; }
 	}
 
 	void Update() {
-		//Debug.Log("mage in: " + gameObject.name + " is : " + (Mage != null ? "not null" : "null"));
-		if (  Mage != null) {
-			Debug.Log("updating mage: " + Mage.ActualHealth);
-			PanelFlaskLife.GetComponent<PanelFlask>().UpdateValue(Mage.ActualHealth, Mage.MaxHealth);
-			PanelFlaskMana.GetComponent<PanelFlask>().UpdateValue(Mage.ActualMana, Mage.MaxMana);
-
-			Mage.RegenerateMe(Time.deltaTime);
+		if (  Player != null) {
+			PanelFlaskLife.GetComponent<PanelFlask>().UpdateValue(Player.Mage.ActualHealth, Player.Mage.MaxHealth);
+			PanelFlaskMana.GetComponent<PanelFlask>().UpdateValue(Player.Mage.ActualMana, Player.Mage.MaxMana);
+			Player.Mage.RegenerateMe(Time.deltaTime);
 		}
 	}
-
-	internal void Prepare(Mage caster, CastListener castListener) {
-		Mage = caster;
-
+	internal void Prepare(Player caster, CastListener castListener) {
+		Player = caster;
 		ImageAvatar.GetComponent<SphereCollider>().radius = ImageAvatar.GetComponent<RectTransform>().GetSize().x/2;
-
-		ButtonSpellLeft.GetComponent<ButtonSpell>().Prepare(caster, caster.LeftHand, castListener);
-		ButtonSpellRight.GetComponent<ButtonSpell>().Prepare(caster, caster.RightHand, castListener);
+		ButtonSpellLeft.GetComponent<ButtonSpell>().Prepare(caster.Mage, caster.Mage.LeftHand, castListener);
+		ButtonSpellRight.GetComponent<ButtonSpell>().Prepare(caster.Mage, caster.Mage.RightHand, castListener);
 	}
 
 	internal void TakeDamage(int p) {
-		Mage._ActualHealth -= p;
+		Player.Mage._ActualHealth -= p;
 
 	}
 }

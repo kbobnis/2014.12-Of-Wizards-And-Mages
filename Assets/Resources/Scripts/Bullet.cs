@@ -32,7 +32,6 @@ public class Bullet : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other) {
 		
-		//if (other.GetComponent)
 		PanelMage pm = other.gameObject.transform.parent.GetComponent<PanelMage>();
 		if (pm != null) {
 			pm.TakeDamage(Spell.AfterHitParams[AfterHitParam.Damage]);
@@ -42,12 +41,10 @@ public class Bullet : MonoBehaviour {
 		PanelMinigame pmini = other.gameObject.GetComponent<PanelMinigame>();
 		if (pmini != null) {
 
-			//left right will bounce
 			if (pmini.LeftCollider == other || pmini.RightCollider == other) {
 				Direction.x = -Direction.x;
 			}
 
-			//top bottom will blow up
 			if (pmini.TopCollider == other || pmini.BottomCollider == other) {
 				BlowUp();
 			}

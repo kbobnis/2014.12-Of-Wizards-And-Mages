@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class PanelMinigame : MonoBehaviour, CastListener {
 
+	public GameObject PanelMenu;
 	public GameObject BulletPrefab, PanelMageBottom, PanelMageTop;
 
 	public BoxCollider TopCollider, BottomCollider, LeftCollider, RightCollider;
@@ -15,15 +16,40 @@ public class PanelMinigame : MonoBehaviour, CastListener {
 		BulletPrefab.SetActive(false);
 	}
 
-	internal void Prepare(Mage mageBottom, Mage mageTop) {
+	void Update() {
+
+		Player winner = MageTop.GetComponent<PanelMage>().Player;
+		Player loser = MageBottom.GetComponent<PanelMage>().Player;
+		bool endGame = false;
+
+
+		if (MageBottom.GetComponent<PanelMage>().Player.Mage.IsDead()) {
+			endGame = true;
+		}
+		if (MageTop.GetComponent<PanelMage>().Player.Mage.IsDead()) {
+			endGame = true;
+			Player tmp = winner;
+			winner = loser;
+			loser = tmp;
+		}
+
+		if (endGame) {
+			PanelMenu.SetActive(true);
+			PanelMenu.GetComponent<PanelMenu>().SetWinnerAndLoser(winner, loser);
+			gameObject.SetActive(false);
+		}
+	}
+
+	internal void Prepare(Player mageBottom, Player mageTop) {
 
 		PanelMageBottom.GetComponent<PanelMage>().Prepare(mageBottom, this);
 		if (PanelMageTop != null) {
-			PanelMageTop.GetComponent<PanelMage>().Prepare(mageTop, this);
+			PanelMageTop.GetComponent<PanelMage>().
+				Prepare(mageTop, this);
 		}
 		LeftCollider.center = new Vector3(360 * AspectRatioKeeper.ActualScale / 2, 0);
 		LeftCollider.size = new Vector3(0, 600 * AspectRatioKeeper.ActualScale, 1);
-
+	
 		RightCollider.center = new Vector3(-360 * AspectRatioKeeper.ActualScale / 2, 0);
 		RightCollider.size = new Vector3(0, 600 * AspectRatioKeeper.ActualScale);
 
@@ -34,8 +60,6 @@ public class PanelMinigame : MonoBehaviour, CastListener {
 	}
 
 	public void CastIt(Mage caster, Spell spell, Vector2 from, Vector2 direction) {
-		Debug.Log("Casting spell " + spell.Name + ", by: " + caster.Name + ", he has " + caster.ActualMana + " mana , direction: " + direction);
-
 		caster._ActualMana -= spell.Cost;
 		BulletPrefab.SetActive(true);
 		GameObject bulletTmp = Instantiate(BulletPrefab) as GameObject;

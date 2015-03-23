@@ -5,15 +5,14 @@ using System.Collections.Generic;
 public class Game : MonoBehaviour {
 
 	public static Game Me;
-
-	public GameObject PanelMinigame;
-
+	public GameObject PanelMinigame, PanelMenu;
 	public List<Spell> Spells = new List<Spell>();
-
+	public Player Player, Enemy;
 
 	void Awake() {
 		Me = this;
-		StartCoroutine(StartingGame());
+		PanelMinigame.SetActive(false);
+		PanelMenu.SetActive(true);
 	}
 
 	IEnumerator StartingGame() {
@@ -30,7 +29,16 @@ public class Game : MonoBehaviour {
 		kelThuzad.LeftHand = Spells[1];
 		kelThuzad.RightHand = Spells[0];
 
-		PanelMinigame.GetComponent<PanelMinigame>().Prepare(ivaAllesi, kelThuzad);
+		Player = new Player(ivaAllesi, new List<Spell>(){ Spells[0], Spells[1]});
+		Enemy = new Player(kelThuzad, new List<Spell>() { Spells[0], Spells[1] });
+
+		PanelMenu.SetActive(false);
+		PanelMinigame.SetActive(true);
+		PanelMinigame.GetComponent<PanelMinigame>().Prepare(Player, Enemy);
+	}
+
+	public void StartGame() {
+		StartCoroutine(StartingGame());
 	}
 }
 

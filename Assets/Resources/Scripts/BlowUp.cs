@@ -17,6 +17,5 @@ class BlowUp : MonoBehaviour{
 	IEnumerator DieInSeconds() {
 		yield return new WaitForSeconds(0.25f);
 		Destroy(gameObject);
-
 	}
 }
