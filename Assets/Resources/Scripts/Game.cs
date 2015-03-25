@@ -15,6 +15,11 @@ public class Game : MonoBehaviour {
 		PanelMenu.SetActive(true);
 	}
 
+	public static float GetXPositionFromGlobal(float screenPos){
+		return (screenPos - (Screen.width / 2 - 360 * AspectRatioKeeper.ActualScale/2)) / (360 * AspectRatioKeeper.ActualScale);
+	}
+
+
 	IEnumerator StartingGame() {
 		yield return new WaitForSeconds(0.1f);
 		//nazwa, koszt, wielkość pocisku, szybkość lotu, wie
