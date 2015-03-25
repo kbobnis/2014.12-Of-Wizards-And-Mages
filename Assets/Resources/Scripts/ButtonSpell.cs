@@ -44,7 +44,6 @@ public class ButtonSpell : MonoBehaviour {
 		te3.AddListener((eventData) => PointerUp());
 		EventTrigger.Entry entry3 = new EventTrigger.Entry() { callback = te3, eventID = EventTriggerType.PointerUp };
 		et.delegates.Add(entry3);
-
 	}
 
 	void Update() {

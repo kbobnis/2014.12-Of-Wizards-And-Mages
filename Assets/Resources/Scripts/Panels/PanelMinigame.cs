@@ -23,10 +23,10 @@ public class PanelMinigame : MonoBehaviour, CastListener {
 		bool endGame = false;
 
 
-		if (MageBottom.GetComponent<PanelMage>().Player.Mage.IsDead()) {
+		if (MageBottom.GetComponent<PanelMage>().Player != null && MageBottom.GetComponent<PanelMage>().Player.Mage.IsDead()) {
 			endGame = true;
 		}
-		if (MageTop.GetComponent<PanelMage>().Player.Mage.IsDead()) {
+		if (MageTop.GetComponent<PanelMage>().Player != null && MageTop.GetComponent<PanelMage>().Player.Mage.IsDead()) {
 			endGame = true;
 			Player tmp = winner;
 			winner = loser;

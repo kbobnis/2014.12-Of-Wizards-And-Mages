@@ -31,7 +31,7 @@ public class Bullet : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other) {
-		
+
 		PanelMage pm = other.gameObject.transform.parent.GetComponent<PanelMage>();
 		if (pm != null) {
 			pm.TakeDamage(Spell.AfterHitParams[AfterHitParam.Damage]);
@@ -56,7 +56,7 @@ public class Bullet : MonoBehaviour {
 		}
 	}
 
-	private void BlowUp() {
+	public void BlowUp() {
 		gameObject.AddComponent<BlowUp>().Prepare(Spell);
 	}
 }
