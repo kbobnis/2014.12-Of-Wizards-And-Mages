@@ -19,7 +19,6 @@ public class Game : MonoBehaviour {
 		return (screenPos - (Screen.width / 2 - 360 * AspectRatioKeeper.ActualScale/2)) / (360 * AspectRatioKeeper.ActualScale);
 	}
 
-
 	IEnumerator StartingGame() {
 		yield return new WaitForSeconds(0.1f);
 

@@ -33,7 +33,7 @@ public class PanelShield : MonoBehaviour {
 
 	private void PointerDown() {
 		ActualShield = new GameObject();
-		ActualShield.AddComponent<ShieldComponent>().Prepare(Shield, Mage);
+		ActualShield.AddComponent<ShieldComponent>().Prepare(Shield, Mage, this);
 		ActualShield.transform.parent = transform.parent;
 	}
 
@@ -60,8 +60,10 @@ class ShieldComponent : MonoBehaviour {
 	Shield Shield;
 	Mage Mage;
 	bool Sustain;
+	PanelShield PanelShield;
 
-	public void Prepare(Shield shield, Mage mage) {
+	public void Prepare(Shield shield, Mage mage, PanelShield panelShield) {
+		PanelShield = panelShield;
 		Sustain = true;
 		Shield = shield;
 		mage.ActualMana -= shield.SetupCost;
@@ -71,18 +73,21 @@ class ShieldComponent : MonoBehaviour {
 	}
 
 	public void AddShieldElement() {
-		GameObject go = new GameObject();
-		go.AddComponent<ShieldElement>().Prepare(Shield);
-		go.transform.SetParent(transform);
+
+		if (Input.mousePosition.y < PanelShield.transform.position.y + PanelShield.GetComponent<RectTransform>().GetHeight()/2 &&
+			Input.mousePosition.y > PanelShield.transform.position.y - PanelShield.GetComponent<RectTransform>().GetHeight()/2) {
+			GameObject go = new GameObject();
+			go.AddComponent<ShieldElement>().Prepare(Shield);
+			go.transform.SetParent(transform);
+		}
 	}
 
 	void Update(){
 		if (Sustain) {
 			Mage.ActualMana -= Shield.SustainCost * Time.deltaTime;
 			AddShieldElement();
-		}
-
-		if (transform.childCount == 0) {
+		} else if (transform.childCount == 0) {
+			PanelShield = null;
 			Destroy(gameObject);
 		}
 	}
