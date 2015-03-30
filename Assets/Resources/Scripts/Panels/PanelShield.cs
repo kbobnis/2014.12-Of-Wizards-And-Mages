@@ -8,6 +8,8 @@ using UnityEngine.UI;
 public class PanelShield : MonoBehaviour {
 
 	GameObject ActualShield;
+	Shield Shield;
+	Mage Mage;
 
 	void Awake() {
 		EventTrigger et = gameObject.AddComponent<EventTrigger>();
@@ -31,49 +33,70 @@ public class PanelShield : MonoBehaviour {
 
 	private void PointerDown() {
 		ActualShield = new GameObject();
-		ActualShield.AddComponent<Shield>().PointerDown();
+		ActualShield.AddComponent<ShieldComponent>().Prepare(Shield, Mage);
 		ActualShield.transform.parent = transform.parent;
 	}
 
 	private void PointerMove() {
-		ActualShield.GetComponent<Shield>().PointerMoved();
 	}
 
 	private void PointerUp() {
+		ActualShield.GetComponent<ShieldComponent>().PointerUp();
 	}
 
+	internal void Prepare(Shield shield, Mage mage) {
+
+		Shield = shield;
+		Mage = mage;
+		float h = shield.ShieldHeight * AspectRatioKeeper.ActualScale * Screen.height;
+		GetComponent<RectTransform>().offsetMin = new Vector2(-180 * AspectRatioKeeper.ActualScale, -h/2);
+		GetComponent<RectTransform>().offsetMax = new Vector2(180 * AspectRatioKeeper.ActualScale, h/2);
+
+	}
 }
 
-class Shield : MonoBehaviour {
+class ShieldComponent : MonoBehaviour {
 
-	public void PointerDown() {
+	Shield Shield;
+	Mage Mage;
+	bool Sustain;
+
+	public void Prepare(Shield shield, Mage mage) {
+		Sustain = true;
+		Shield = shield;
+		mage.ActualMana -= shield.SetupCost;
+		Mage = mage;
 		name = "Shield";
 		AddShieldElement();
 	}
 
 	public void AddShieldElement() {
 		GameObject go = new GameObject();
-		go.AddComponent<ShieldElement>().Prepare();
-		go.transform.parent = transform;
+		go.AddComponent<ShieldElement>().Prepare(Shield);
+		go.transform.SetParent(transform);
 	}
 
-	internal void PointerMoved() {
-		AddShieldElement();
-	}
+	void Update(){
+		if (Sustain) {
+			Mage.ActualMana -= Shield.SustainCost * Time.deltaTime;
+			AddShieldElement();
+		}
 
-	void Update() {
 		if (transform.childCount == 0) {
 			Destroy(gameObject);
 		}
 	}
 
+	internal void PointerUp() {
+		Sustain = false;
+	}
 }
 
 class ShieldElement : MonoBehaviour {
 
 	public static Sprite Fireball = Resources.Load<Sprite>("GUI/fireball");
 
-	public void Prepare() {
+	public void Prepare(Shield shield) {
 		gameObject.AddComponent<Image>().sprite = Fireball;
 		gameObject.GetComponent<RectTransform>().position = Input.mousePosition;
 		SphereCollider sc = gameObject.AddComponent<SphereCollider>();
@@ -83,8 +106,8 @@ class ShieldElement : MonoBehaviour {
 		Rigidbody r = gameObject.AddComponent<Rigidbody>();
 		r.isKinematic = true;
 		gameObject.name = "Shield part";
-		gameObject.transform.parent = gameObject.transform;
-		StartCoroutine(DieInSeconds());
+		gameObject.transform.SetParent(gameObject.transform);
+		StartCoroutine(DieInSeconds(shield.SustainTime));
 	}
 
 	void OnTriggerEnter(Collider other) {
@@ -93,9 +116,10 @@ class ShieldElement : MonoBehaviour {
 		}
 	}
 
-	private IEnumerator DieInSeconds() {
+	private IEnumerator DieInSeconds(float sustainTime) {
+
 		for (int i = 0; i < 10; i++) {
-			yield return new WaitForSeconds(0.1f);
+			yield return new WaitForSeconds(sustainTime / 10f);
 			Color c = GetComponent<Image>().color;
 			GetComponent<Image>().color = new Color(c.r, c.g, c.b, c.a - 0.1f);
 		}

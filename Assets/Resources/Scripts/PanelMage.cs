@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PanelMage : MonoBehaviour {
 
-	public GameObject ButtonSpellLeft, ButtonSpellRight, PanelFlaskLife, PanelFlaskMana, ImageAvatar;
+	public GameObject ButtonSpellLeft, ButtonSpellRight, PanelFlaskLife, PanelFlaskMana, ImageAvatar, PanelShield;
 	private Player _Player;
 
 	public Player Player {
@@ -13,8 +13,8 @@ public class PanelMage : MonoBehaviour {
 
 	void Update() {
 		if (  Player != null) {
-			PanelFlaskLife.GetComponent<PanelFlask>().UpdateValue(Player.Mage.ActualHealth, Player.Mage.MaxHealth);
-			PanelFlaskMana.GetComponent<PanelFlask>().UpdateValue(Player.Mage.ActualMana, Player.Mage.MaxMana);
+			PanelFlaskLife.GetComponent<PanelFlask>().UpdateValue((int)Player.Mage.ActualHealth, Player.Mage.MaxHealth);
+			PanelFlaskMana.GetComponent<PanelFlask>().UpdateValue((int)Player.Mage.ActualMana, Player.Mage.MaxMana);
 			Player.Mage.RegenerateMe(Time.deltaTime);
 		}
 	}
@@ -23,6 +23,10 @@ public class PanelMage : MonoBehaviour {
 		ImageAvatar.GetComponent<SphereCollider>().radius = ImageAvatar.GetComponent<RectTransform>().GetSize().x/2;
 		ButtonSpellLeft.GetComponent<ButtonSpell>().Prepare(caster.Mage, caster.Mage.LeftHand, castListener);
 		ButtonSpellRight.GetComponent<ButtonSpell>().Prepare(caster.Mage, caster.Mage.RightHand, castListener);
+		if (PanelShield != null) {
+			PanelShield sc = PanelShield.GetComponent<PanelShield>();
+			sc.Prepare(_Player.Mage.Shield, _Player.Mage);
+		}
 	}
 
 	internal void TakeDamage(int p) {

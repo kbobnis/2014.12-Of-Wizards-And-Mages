@@ -79,9 +79,8 @@ public class ButtonSpell : MonoBehaviour {
 		PointerMove();
 	}
 
-	void PointerMove() {
-
-		if (!Casted) {
+	void PointerMove(){
+		if(!Casted) {
 			int dX = (int)Input.mousePosition.x;
 			int dY = (int)Input.mousePosition.y;
 			Distance = (Mathf.Abs(dX - StartingMousePos.x) + Mathf.Abs(dY - StartingMousePos.y)) / (float)Screen.width;

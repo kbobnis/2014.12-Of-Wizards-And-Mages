@@ -6,16 +6,15 @@ public class Mage  {
 	private MageClass MageClass;
 
 	public Spell LeftHand, RightHand;
-	public int _ActualHealth;
-	public int _ActualMana;
+	public float _ActualHealth;
+	public float _ActualMana;
+	public Shield Shield;
 
-	private float PercentManaRegenerated, PercentHealthRegenerated;
-
-	public int ActualMana {
+	public float ActualMana {
 		get { return _ActualMana; }
 		set { _ActualMana = value; }
 	}
-	public int ActualHealth {
+	public float ActualHealth {
 		get { return _ActualHealth; }
 		set { _ActualHealth = value; }
 	}
@@ -40,46 +39,34 @@ public class Mage  {
 	}
 
 
-	internal void RegenerateMe(float p) {
-		RegenerateMana(p);
-		RegenerateHealth(p);
+	internal void RegenerateMe(float deltaTime) {
+		RegenerateMana(deltaTime);
+		RegenerateHealth(deltaTime);
 	}
 
-	private void RegenerateHealth(float p) {
-		if (ActualHealth< MaxHealth) {
-			PercentHealthRegenerated += p / (float)MageClass.LifeRegen ;
-		} else {
-			PercentHealthRegenerated= 0;
-		}
-
-		if (PercentHealthRegenerated > 1) {
-			ActualHealth += 1;
-			PercentHealthRegenerated= 0;
-		}
+	private void RegenerateHealth(float deltaTime) {
+		if (ActualHealth < MaxHealth) {
+			ActualHealth += deltaTime * MageClass.LifeRegen ;
+		} 
 	}
 
-	private void RegenerateMana(float p) {
+	private void RegenerateMana(float deltaTime) {
+
 		if (ActualMana < MaxMana) {
-			PercentManaRegenerated += p / MageClass.ManaRegen;
-		} else {
-			PercentManaRegenerated = 0;
-		}
-
-		if (PercentManaRegenerated > 1) {
-			ActualMana += 1;
-			PercentManaRegenerated = 0;
-		}
+			ActualMana += deltaTime * MageClass.ManaRegen;
+		} 
 	}
 
 	public bool IsDead() {
 		return ActualHealth <= 0;
 	}
+
 }
 
 
 public class MageClass {
-	public static readonly MageClass Creator = new MageClass(100, 100, 1, 3);
-	public static readonly MageClass Thenacurviat = new MageClass(100, 100, 3, 0.5f);
+	public static readonly MageClass Creator = new MageClass(100, 100, 3, 1);
+	public static readonly MageClass Thenacurviat = new MageClass(100, 100, 3, 2);
 	
 	public readonly int StartingLife;
 	public readonly int StartingMana;
