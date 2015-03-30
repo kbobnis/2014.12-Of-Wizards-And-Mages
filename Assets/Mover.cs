@@ -26,7 +26,7 @@ public class Mover : MonoBehaviour {
 			RightMove = true;
 		}
 
-		Debug.Log ("my x position is " + xPos);
+		//Debug.Log ("my x position is " + xPos);
 
 		gameObject.GetComponent<RectTransform> ().position = new Vector3 (xPos, oldPos.y, oldPos.z);
 	}
