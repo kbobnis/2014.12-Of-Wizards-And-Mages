@@ -9,6 +9,7 @@ public class ButtonSpell : MonoBehaviour {
 	public GameObject ImageSpellCasting, ImageSpellReady;
 	public Spell Spell;
 	private Mage Caster;
+	public GameObject WhereToCastFrom;
 	
 	Vector2 StartingMousePos;
 	float Distance;
@@ -59,7 +60,8 @@ public class ButtonSpell : MonoBehaviour {
 			ImageSpellCasting.SetActive(false);
 			if (WillCast && !Casted) {
 				if (Caster.CanAfford(Spell)) {
-					CastListener.CastIt(Caster, Spell, GetComponent<Transform>().position, Direction);
+					Vector2 pos = WhereToCastFrom.GetComponent<Transform>().position;
+					CastListener.CastIt(Caster, Spell, new Vector2(pos.x, pos.y- WhereToCastFrom.GetComponent<RectTransform>().GetHeight()/2-GetComponent<RectTransform>().GetHeight()/2 -1 ), Direction);
 					Casted = true;
 				}
 			}
