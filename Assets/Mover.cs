@@ -17,7 +17,7 @@ public class Mover : MonoBehaviour {
 
 		float w = GetComponent<RectTransform> ().GetWidth ();
 
-		float xPos = oldPos.x + (float)5 * (RightMove?1:-1);
+		float xPos = oldPos.x + (float)3 * (RightMove?1:-1);
 		float x = Game.GetXPositionFromGlobal (xPos + w/2 * (RightMove?1:-1));
 		if (x > 1){
 			RightMove = false;

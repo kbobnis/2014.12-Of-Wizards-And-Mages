@@ -60,7 +60,11 @@ public class ButtonSpell : MonoBehaviour {
 			if (WillCast && !Casted) {
 				if (Caster.CanAfford(Spell)) {
 					Vector2 pos = WhereToCastFrom.GetComponent<Transform>().position;
-					CastListener.CastIt(Caster, Spell, new Vector2(pos.x, pos.y- WhereToCastFrom.GetComponent<RectTransform>().GetHeight()/2-GetComponent<RectTransform>().GetHeight()/2 -1 ), Direction);
+					float meRadius = WhereToCastFrom.GetComponent<RectTransform>().GetHeight() / 2;
+					float spellRadius = GetComponent<RectTransform>().GetHeight()/2;
+					float x = pos.x + Direction.x * (meRadius + spellRadius);
+					float y = pos.y + Direction.y * (meRadius + spellRadius);
+					CastListener.CastIt(Caster, Spell, new Vector2(x, y), Direction);
 					Casted = true;
 				}
 			}

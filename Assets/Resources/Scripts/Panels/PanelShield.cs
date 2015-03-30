@@ -51,7 +51,6 @@ public class PanelShield : MonoBehaviour {
 		float h = shield.ShieldHeight * AspectRatioKeeper.ActualScale * Screen.height;
 		GetComponent<RectTransform>().offsetMin = new Vector2(-180 * AspectRatioKeeper.ActualScale, -h/2);
 		GetComponent<RectTransform>().offsetMax = new Vector2(180 * AspectRatioKeeper.ActualScale, h/2);
-
 	}
 }
 
