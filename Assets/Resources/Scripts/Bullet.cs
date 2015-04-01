@@ -6,6 +6,7 @@ public class Bullet : MonoBehaviour {
 
 	Vector2 Direction;
 	Spell Spell;
+	bool Bounced = false;
 
 	void Update() { 
 		Vector2 oldPos = transform.position;
@@ -43,6 +44,10 @@ public class Bullet : MonoBehaviour {
 
 			if (pmini.LeftCollider == other || pmini.RightCollider == other) {
 				Direction.x = -Direction.x;
+				if (Bounced) {
+					BlowUp();
+				}
+				Bounced = true;
 			}
 
 			if (pmini.TopCollider == other || pmini.BottomCollider == other) {
