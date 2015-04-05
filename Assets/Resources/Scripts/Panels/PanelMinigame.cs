@@ -40,13 +40,11 @@ public class PanelMinigame : MonoBehaviour, CastListener {
 		}
 	}
 
-	internal void Prepare(Player mageBottom, Player mageTop) {
+	internal void Prepare(Player humanPlayer, Player enemyPlayer) {
 
-		PanelMageBottom.GetComponent<PanelMage>().Prepare(mageBottom, this);
-		if (PanelMageTop != null) {
-			PanelMageTop.GetComponent<PanelMage>().
-				Prepare(mageTop, this);
-		}
+		PanelMageBottom.GetComponent<PanelMage>().Prepare(humanPlayer, this);
+		PanelMageTop.GetComponent<PanelMage>().Prepare(enemyPlayer, this);
+		
 		LeftCollider.center = new Vector3(360 * AspectRatioKeeper.ActualScale / 2, 0);
 		LeftCollider.size = new Vector3(0, 600 * AspectRatioKeeper.ActualScale, 1);
 	

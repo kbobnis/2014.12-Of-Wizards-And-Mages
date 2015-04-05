@@ -16,7 +16,7 @@ public class ButtonSpell : MonoBehaviour {
 	Vector2 Direction;
 	bool WillCast;
 
-	CastListener CastListener;
+	public CastListener CastListener;
 	private bool Casted;
 
 	public void Prepare(Mage caster, Spell spell, CastListener castListener) {
@@ -26,6 +26,7 @@ public class ButtonSpell : MonoBehaviour {
 	}
 
 	void Awake() {
+
 		PointerUp();
 
 		EventTrigger et = gameObject.AddComponent<EventTrigger>();
@@ -58,19 +59,23 @@ public class ButtonSpell : MonoBehaviour {
 		try {
 			ImageSpellCasting.SetActive(false);
 			if (WillCast && !Casted) {
-				if (Caster.CanAfford(Spell)) {
-					Vector2 pos = WhereToCastFrom.GetComponent<Transform>().position;
-					float meRadius = WhereToCastFrom.GetComponent<RectTransform>().GetHeight() / 2;
-					float spellRadius = GetComponent<RectTransform>().GetHeight()/2;
-					float x = pos.x + Direction.x * (meRadius + spellRadius);
-					float y = pos.y + Direction.y * (meRadius + spellRadius);
-					CastListener.CastIt(Caster, Spell, new Vector2(x, y), Direction);
-					Casted = true;
-				}
+				Cast(Direction);
 			}
 			
 		} catch (Exception e) {
 			Debug.Log("Exception: " + e);
+		}
+	}
+
+	public void Cast(Vector3 direction) {
+		if (Caster.CanAfford(Spell)) {
+			Vector2 pos = WhereToCastFrom.GetComponent<Transform>().position;
+			float meRadius = WhereToCastFrom.GetComponent<RectTransform>().GetHeight() / 2;
+			float spellRadius = GetComponent<RectTransform>().GetHeight() / 2;
+			float x = pos.x + direction.x * (meRadius + spellRadius);
+			float y = pos.y + direction.y * (meRadius + spellRadius);
+			CastListener.CastIt(Caster, Spell, new Vector2(x, y), direction);
+			Casted = true;
 		}
 	}
 	

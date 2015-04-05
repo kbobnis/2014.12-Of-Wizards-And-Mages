@@ -5,13 +5,6 @@ public class Mover : MonoBehaviour {
 
 	public bool RightMove = false;
 
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
 	void Update () {
 		Vector3 oldPos = gameObject.GetComponent<RectTransform>().position;
 
@@ -25,8 +18,6 @@ public class Mover : MonoBehaviour {
 		if (x  < -0) {
 			RightMove = true;
 		}
-
-		//Debug.Log ("my x position is " + xPos);
 
 		gameObject.GetComponent<RectTransform> ().position = new Vector3 (xPos, oldPos.y, oldPos.z);
 	}
