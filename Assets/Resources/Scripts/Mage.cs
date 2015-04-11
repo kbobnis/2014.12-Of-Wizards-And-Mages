@@ -38,6 +38,11 @@ public class Mage  {
 		return Spell.Cost <= ActualMana;
 	}
 
+    internal bool CanAfford(Shield Shield)
+    {
+        return Shield.SetupCost <= ActualMana && Shield.SustainCost <=_ActualMana;
+    }
+
 
 	internal void RegenerateMe(float deltaTime) {
 		RegenerateMana(deltaTime);

@@ -32,12 +32,19 @@ public class PanelShield : MonoBehaviour {
 	}
 
 	private void PointerDown() {
-		ActualShield = new GameObject();
-		ActualShield.AddComponent<ShieldComponent>().Prepare(Shield, Mage, this);
-		ActualShield.transform.parent = transform.parent;
+        if (Mage.CanAfford(Shield))
+        {
+            ActualShield = new GameObject();
+            ActualShield.AddComponent<ShieldComponent>().Prepare(Shield, Mage, this);
+            ActualShield.transform.parent = transform.parent;
+        }
 	}
 
 	private void PointerMove() {
+        if (!Mage.CanAfford(Shield))
+        {
+            ActualShield.GetComponent<ShieldComponent>().PointerUp();
+        }
 	}
 
 	private void PointerUp() {
