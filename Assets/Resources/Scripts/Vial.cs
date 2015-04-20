@@ -3,12 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Vial {
-    public string Name;
+    
+	public string Name;
     public Dictionary<VialParam, int> VialParams;// = new Dictionary<VialParam,int>();
+	public Sprite Sprite;
 
-    public Vial(string name, Dictionary<VialParam, int> vialParam) {
+    public Vial(string name, Dictionary<VialParam, int> vialParam, Sprite sprite) {
 		Name = name;
-        VialParams = vialParam ;
+        VialParams = vialParam;
+		Sprite = sprite;
 	}
 }
 

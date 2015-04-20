@@ -15,10 +15,14 @@ public class PanelVial : MonoBehaviour
     internal void Prepare(Mage caster, List<Vial> vialList) {
         Caster = caster;
 		VialList = vialList;
+		
     }
 
 	void Update() {
 		GetComponent<Image>().enabled = VialList.Count > 0;
+		if (VialList.Count > 0) {
+			GetComponent<Image>().sprite = VialList[0].Sprite;
+		}
 	}
 
 	public void Use() {

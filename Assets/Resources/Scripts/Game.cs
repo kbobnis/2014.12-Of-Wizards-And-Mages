@@ -29,12 +29,12 @@ public class Game : MonoBehaviour {
 
 		Spells.Add(new Spell("Fireball", 5, new Dictionary<FlyingParam, int>(){  {FlyingParam.Speed, 80}, {FlyingParam.Damage, 10} }, new Dictionary<AfterHitParam, int>(){ { AfterHitParam.Damage, 10}, {AfterHitParam.Time, 2}} ));
 		Spells.Add(new Spell("Ice", 10, new Dictionary<FlyingParam, int>(){ {FlyingParam.Speed, 120}, {FlyingParam.Damage, 10} }, new Dictionary<AfterHitParam, int>(){ { AfterHitParam.Damage, 20}, {AfterHitParam.Time, 2}, {AfterHitParam.SlowDown, 1}} ));
-        Vials.Add(new Vial("Minor Mana Potion", new Dictionary<VialParam, int>() { { VialParam.ManaRegen, 100 }, { VialParam.LifeRegen, 100 } }));
-        Vials.Add(new Vial("Minor Health Potion", new Dictionary<VialParam, int>() { { VialParam.LifeRegen, 100 } }));
+        Vials.Add(new Vial("Minor Mana Potion", new Dictionary<VialParam, int>() { { VialParam.ManaRegen, 100 }, { VialParam.LifeRegen, 100 } }, SpriteManager.ManaPotion));
+        Vials.Add(new Vial("Minor Health Potion", new Dictionary<VialParam, int>() { { VialParam.LifeRegen, 100 } }, SpriteManager.HealthPotion));
 
 		List<Vial> rightVials = new List<Vial>();
-		rightVials.Add(new Vial("Double bonus", new Dictionary<VialParam, int>() { { VialParam.ManaRegen, 100 }, { VialParam.LifeRegen, 100 } }));
-        rightVials.Add(new Vial("Faster mana recovery", new Dictionary<VialParam, int>() { { VialParam.LifeRegen, 100 } }));
+		rightVials.Add(new Vial("Double bonus", new Dictionary<VialParam, int>() { { VialParam.ManaRegen, 100 }, { VialParam.LifeRegen, 100 } }, SpriteManager.HealthPotion));
+        rightVials.Add(new Vial("Faster mana recovery", new Dictionary<VialParam, int>() { { VialParam.LifeRegen, 100 } }, SpriteManager.ManaPotion));
 
 		Mage ivaAllesi = new Mage("Iva Alessi", MageClass.Thenacurviat);
 		ivaAllesi.LeftHand = Spells[0];
@@ -50,7 +50,7 @@ public class Game : MonoBehaviour {
         kelThuzad.LeftVials = Vials;
 
 		Player = new Player(ivaAllesi, new List<Spell>(){ Spells[0], Spells[1]});
-		Enemy = new Player(kelThuzad, new List<Spell>() { Spells[0], Spells[1] });
+		Enemy = new Player(kelThuzad, new List<Spell>() { Spells[0], Spells[1]});
 		Enemy.SetAi(new Ai(0.9f, 5.9f, 0.9f));
 
 		PanelMenu.SetActive(false);
