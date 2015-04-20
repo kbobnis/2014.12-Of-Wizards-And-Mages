@@ -20,7 +20,7 @@ public class AiController : PlayerController, GameTickListener {
 	}
 
 	public void GameUpdate() {
-		if (LastShot > Ai.FiringSpeed){
+		if (LastShot > Ai.FiringSpeed) {
 			LastShot -= Ai.FiringSpeed;
 
 			Vector3 enemyPos = EnemysPanel.GetComponent<PanelMage>().ImageAvatar.transform.position;
@@ -35,4 +35,7 @@ public class AiController : PlayerController, GameTickListener {
 		}
 		LastShot += Time.deltaTime;
 	}
+
+
+
 }

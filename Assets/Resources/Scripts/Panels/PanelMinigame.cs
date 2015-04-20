@@ -11,6 +11,7 @@ public class PanelMinigame : MonoBehaviour, CastListener {
 
 	public List<GameObject> Bullets = new List<GameObject>();
 	public GameObject MageTop, MageBottom;
+	public List<GameTickListener> GameTickListeners = new List<GameTickListener>();
 
 	void Awake() {
 		BulletPrefab.SetActive(false);
@@ -38,9 +39,14 @@ public class PanelMinigame : MonoBehaviour, CastListener {
 			PanelMenu.GetComponent<PanelMenu>().SetWinnerAndLoser(winner, loser);
 			gameObject.SetActive(false);
 		}
+
+		foreach (GameTickListener gtl in GameTickListeners) {
+			gtl.GameUpdate();
+		}
 	}
 
 	internal void Prepare(Player humanPlayer, Player enemyPlayer) {
+		GameTickListeners.Clear();
 
 		PanelMageBottom.GetComponent<PanelMage>().Prepare(humanPlayer, this);
 		PanelMageTop.GetComponent<PanelMage>().Prepare(enemyPlayer, this);
@@ -55,6 +61,10 @@ public class PanelMinigame : MonoBehaviour, CastListener {
 		TopCollider.size = new Vector3(360 * AspectRatioKeeper.ActualScale, 0);
 		BottomCollider.center = new Vector3(0, AspectRatioKeeper.ActualScale / 2 * 600);
 		BottomCollider.size = new Vector3(360 * AspectRatioKeeper.ActualScale, 0);
+
+		AiController aic = new AiController();
+		aic.PrepareFight(enemyPlayer.Mage, enemyPlayer.Ai, PanelMageTop.GetComponent<PanelMage>(), PanelMageBottom.GetComponent<PanelMage>());
+		GameTickListeners.Add(aic);
 	}
 
 	public void CastIt(Mage caster, Spell spell, Vector2 from, Vector2 direction) {
