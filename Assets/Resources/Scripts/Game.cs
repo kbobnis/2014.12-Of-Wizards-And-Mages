@@ -10,7 +10,7 @@ public class Game : MonoBehaviour {
     public List<Vial> Bonuses = new List<Vial>();
 	public Player Player, Enemy;
 
-	public List<GameTickListener> GameTickListeners = new List<GameTickListener>();
+	
 
 	void Awake() {
 		Me = this;
@@ -50,16 +50,10 @@ public class Game : MonoBehaviour {
 
 		Player = new Player(ivaAllesi, new List<Spell>(){ Spells[0], Spells[1]});
 		Enemy = new Player(kelThuzad, new List<Spell>() { Spells[0], Spells[1] });
+		Enemy.SetAi(new Ai(0.9f, 5.9f, 0.9f));
 
 		PanelMenu.SetActive(false);
 		PanelMinigame.SetActive(true);
-
-		Ai ai = new Ai(0.9f, 0.9f, 0.9f);
-
-		AiController aic = new AiController();
-		aic.PrepareFight(Enemy.Mage, ai, PanelMinigame.GetComponent<PanelMinigame>().PanelMageTop.GetComponent<PanelMage>(), PanelMinigame.GetComponent<PanelMinigame>().PanelMageBottom.GetComponent<PanelMage>());
-
-		GameTickListeners.Add(aic);
 
 		PanelMinigame.GetComponent<PanelMinigame>().Prepare(Player, Enemy);
 	}
@@ -68,11 +62,6 @@ public class Game : MonoBehaviour {
 		StartCoroutine(StartingGame());
 	}
 
-	void Update() {
-		foreach (GameTickListener gtl in GameTickListeners) {
-			gtl.GameUpdate();
-		}
-	}
 }
 
 public enum FlyingParam {
