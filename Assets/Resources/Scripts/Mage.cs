@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Mage  {
 	public string Name;
@@ -9,6 +10,11 @@ public class Mage  {
 	public float _ActualHealth;
 	public float _ActualMana;
 	public Shield Shield;
+    public List<Vial> LeftVialList;
+    public List<Vial> RightVialList;
+    public List<Vial> ActiveBonuses;// = new List<Vial>();
+
+
 
 	public float ActualMana {
 		get { return _ActualMana; }
@@ -40,11 +46,17 @@ public class Mage  {
 
     internal bool CanAfford(Shield Shield)
     {
-        return Shield.SetupCost <= ActualMana && Shield.SustainCost <=_ActualMana;
+        return Shield.SetupCost <= ActualMana;
+    }
+
+    internal bool CanSustain(Shield Shield)
+    {
+        return Shield.SustainCost <= ActualMana;
     }
 
 
-	internal void RegenerateMe(float deltaTime) {
+	internal void Update(float deltaTime) {
+
 		RegenerateMana(deltaTime);
 		RegenerateHealth(deltaTime);
 	}
@@ -66,6 +78,21 @@ public class Mage  {
 		return ActualHealth <= 0;
 	}
 
+
+    internal void UseVial(Vial vial) {
+        if (vial.VialParams.ContainsKey(VialParam.LifeRegen)) {
+            ActualHealth += vial.VialParams[VialParam.LifeRegen];
+        }
+
+        if (vial.VialParams.ContainsKey(VialParam.ManaRegen)) {
+            ActualMana += vial.VialParams[VialParam.ManaRegen];
+        }
+      //  ActiveBonuses.Add(vial);
+    }
+
+    public void AddVial(Vial vial) {
+        RightVialList.Add(vial);
+    }
 }
 
 

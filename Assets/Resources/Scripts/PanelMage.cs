@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PanelMage : MonoBehaviour {
 
-	public GameObject ButtonSpellLeft, ButtonSpellRight, PanelFlaskLife, PanelFlaskMana, ImageAvatar, PanelShield;
+	public GameObject ButtonSpellLeft, ButtonSpellRight, PanelFlaskLife, PanelFlaskMana, ImageAvatar, PanelShield, VialsList;
 	private Player _Player;
 
 	public Player Player {
@@ -15,7 +15,7 @@ public class PanelMage : MonoBehaviour {
 		if (  Player != null) {
 			PanelFlaskLife.GetComponent<PanelFlask>().UpdateValue((int)Player.Mage.ActualHealth, Player.Mage.MaxHealth);
 			PanelFlaskMana.GetComponent<PanelFlask>().UpdateValue((int)Player.Mage.ActualMana, Player.Mage.MaxMana);
-			Player.Mage.RegenerateMe(Time.deltaTime);
+			Player.Mage.Update(Time.deltaTime);
 		}
 	}
 	internal void Prepare(Player caster, CastListener castListener) {
@@ -27,6 +27,9 @@ public class PanelMage : MonoBehaviour {
 			PanelShield sc = PanelShield.GetComponent<PanelShield>();
 			sc.Prepare(_Player.Mage.Shield, _Player.Mage);
 		}
+        if (VialsList != null) {
+            VialsList.GetComponent<PanelVial>().Prepare(caster.Mage, caster.Mage.ActiveBonuses);
+        }
 	}
 
 	internal void TakeDamage(int p) {

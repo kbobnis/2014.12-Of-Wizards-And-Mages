@@ -41,7 +41,7 @@ public class PanelShield : MonoBehaviour {
 	}
 
 	private void PointerMove() {
-        if (!Mage.CanAfford(Shield))
+        if (!Mage.CanSustain(Shield))
         {
             ActualShield.GetComponent<ShieldComponent>().PointerUp();
         }
