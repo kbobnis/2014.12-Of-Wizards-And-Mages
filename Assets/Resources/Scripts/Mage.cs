@@ -10,19 +10,27 @@ public class Mage  {
 	public float _ActualHealth;
 	public float _ActualMana;
 	public Shield Shield;
-    public List<Vial> LeftVialList;
-    public List<Vial> RightVialList;
+    public List<Vial> LeftVials = new List<Vial>();
+	public List<Vial> RightVials = new List<Vial>();
     public List<Vial> ActiveBonuses;// = new List<Vial>();
-
-
 
 	public float ActualMana {
 		get { return _ActualMana; }
-		set { _ActualMana = value; }
+		set { 
+			_ActualMana = value;
+			if (_ActualMana > MaxMana) {
+				_ActualMana = MaxMana;
+			}
+		}
 	}
 	public float ActualHealth {
 		get { return _ActualHealth; }
-		set { _ActualHealth = value; }
+		set { 
+			_ActualHealth = value;
+			if (_ActualHealth > MaxHealth) {
+				_ActualHealth = MaxHealth;
+			}
+		}
 	}
 
 	public int MaxHealth {
@@ -81,17 +89,16 @@ public class Mage  {
 
     internal void UseVial(Vial vial) {
         if (vial.VialParams.ContainsKey(VialParam.LifeRegen)) {
-            ActualHealth += vial.VialParams[VialParam.LifeRegen];
+			ActualHealth += vial.VialParams[VialParam.LifeRegen];
         }
 
         if (vial.VialParams.ContainsKey(VialParam.ManaRegen)) {
-            ActualMana += vial.VialParams[VialParam.ManaRegen];
+			ActualMana += vial.VialParams[VialParam.ManaRegen];
         }
-      //  ActiveBonuses.Add(vial);
     }
 
     public void AddVial(Vial vial) {
-        RightVialList.Add(vial);
+        LeftVials.Add(vial);
     }
 }
 

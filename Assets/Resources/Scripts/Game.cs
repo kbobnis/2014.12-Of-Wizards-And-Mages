@@ -7,7 +7,7 @@ public class Game : MonoBehaviour {
 	public static Game Me;
 	public GameObject PanelMinigame, PanelMenu;
 	public List<Spell> Spells = new List<Spell>();
-    public List<Vial> Bonuses = new List<Vial>();
+    public List<Vial> Vials = new List<Vial>();
 	public Player Player, Enemy;
 
 	
@@ -27,26 +27,27 @@ public class Game : MonoBehaviour {
 
 		Shield shield = new Shield(5f, 3f, 2f, 0.15f);
 
-
-
 		Spells.Add(new Spell("Fireball", 5, new Dictionary<FlyingParam, int>(){  {FlyingParam.Speed, 80}, {FlyingParam.Damage, 10} }, new Dictionary<AfterHitParam, int>(){ { AfterHitParam.Damage, 10}, {AfterHitParam.Time, 2}} ));
 		Spells.Add(new Spell("Ice", 10, new Dictionary<FlyingParam, int>(){ {FlyingParam.Speed, 120}, {FlyingParam.Damage, 10} }, new Dictionary<AfterHitParam, int>(){ { AfterHitParam.Damage, 20}, {AfterHitParam.Time, 2}, {AfterHitParam.SlowDown, 1}} ));
-        Bonuses.Add(new Vial("Minor Mana Potion", new Dictionary<VialParam, int>() { { VialParam.ManaRegen, 100 }, { VialParam.LifeRegen, 100 } }));
-        Bonuses.Add(new Vial("Minor Health Potion", new Dictionary<VialParam, int>() { { VialParam.LifeRegen, 100 } }));
+        Vials.Add(new Vial("Minor Mana Potion", new Dictionary<VialParam, int>() { { VialParam.ManaRegen, 100 }, { VialParam.LifeRegen, 100 } }));
+        Vials.Add(new Vial("Minor Health Potion", new Dictionary<VialParam, int>() { { VialParam.LifeRegen, 100 } }));
 
-   // ManaRegen, LifeRegen, DmgBonus, Time;
+		List<Vial> rightVials = new List<Vial>();
+		rightVials.Add(new Vial("Double bonus", new Dictionary<VialParam, int>() { { VialParam.ManaRegen, 100 }, { VialParam.LifeRegen, 100 } }));
+        rightVials.Add(new Vial("Faster mana recovery", new Dictionary<VialParam, int>() { { VialParam.LifeRegen, 100 } }));
 
 		Mage ivaAllesi = new Mage("Iva Alessi", MageClass.Thenacurviat);
 		ivaAllesi.LeftHand = Spells[0];
 		ivaAllesi.RightHand = Spells[1];
 		ivaAllesi.Shield = shield;
-        ivaAllesi.ActiveBonuses = Bonuses;
+        ivaAllesi.LeftVials = Vials;
+		ivaAllesi.RightVials = rightVials;
 
 		Mage kelThuzad = new Mage("Kel Thuzad", MageClass.Creator);
 		kelThuzad.LeftHand = Spells[1];
 		kelThuzad.RightHand = Spells[0];
         kelThuzad.Shield = shield;
-        kelThuzad.ActiveBonuses = Bonuses;
+        kelThuzad.LeftVials = Vials;
 
 		Player = new Player(ivaAllesi, new List<Spell>(){ Spells[0], Spells[1]});
 		Enemy = new Player(kelThuzad, new List<Spell>() { Spells[0], Spells[1] });

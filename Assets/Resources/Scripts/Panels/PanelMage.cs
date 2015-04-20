@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PanelMage : MonoBehaviour {
 
-	public GameObject ButtonSpellLeft, ButtonSpellRight, PanelFlaskLife, PanelFlaskMana, ImageAvatar, PanelShield, VialsList;
+	public GameObject ButtonSpellLeft, ButtonSpellRight, PanelFlaskLife, PanelFlaskMana, ImageAvatar, PanelShield, ButtonRightBonus, ButtonLeftBonus;
 	private Player _Player;
 
 	public Player Player {
@@ -27,9 +27,13 @@ public class PanelMage : MonoBehaviour {
 			PanelShield sc = PanelShield.GetComponent<PanelShield>();
 			sc.Prepare(_Player.Mage.Shield, _Player.Mage);
 		}
-        if (VialsList != null) {
-            VialsList.GetComponent<PanelVial>().Prepare(caster.Mage, caster.Mage.ActiveBonuses);
-        }
+
+		if (ButtonLeftBonus != null) {
+			ButtonLeftBonus.GetComponent<PanelVial>().Prepare(_Player.Mage, _Player.Mage.LeftVials);
+		}
+		if (ButtonRightBonus != null) {
+			ButtonRightBonus.GetComponent<PanelVial>().Prepare(_Player.Mage, _Player.Mage.RightVials);
+		}
 	}
 
 	internal void TakeDamage(int p) {
