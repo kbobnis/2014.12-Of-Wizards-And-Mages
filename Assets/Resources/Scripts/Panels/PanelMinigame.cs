@@ -5,13 +5,15 @@ using System.Collections.Generic;
 public class PanelMinigame : MonoBehaviour, CastListener {
 
 	public GameObject PanelMenu;
-	public GameObject BulletPrefab, PanelMageBottom, PanelMageTop;
+	public GameObject BulletPrefab, PanelMageBottom, PanelMageTop, PanelFounders;
 
 	public BoxCollider TopCollider, BottomCollider, LeftCollider, RightCollider;
 
 	public List<GameObject> Bullets = new List<GameObject>();
 	public GameObject MageTop, MageBottom;
 	public List<GameTickListener> GameTickListeners = new List<GameTickListener>();
+
+	private MinigameParameters MinigameParameters;
 
 	void Awake() {
 		BulletPrefab.SetActive(false);
@@ -43,10 +45,14 @@ public class PanelMinigame : MonoBehaviour, CastListener {
 		foreach (GameTickListener gtl in GameTickListeners) {
 			gtl.GameUpdate();
 		}
+
+
+		MinigameParameters.Update();
 	}
 
-	internal void Prepare(Player humanPlayer, Player enemyPlayer) {
+	internal void Prepare(Player humanPlayer, Player enemyPlayer, MinigameParameters minigameParameters) {
 		GameTickListeners.Clear();
+		MinigameParameters = minigameParameters;
 
 		PanelMageBottom.GetComponent<PanelMage>().Prepare(humanPlayer, this);
 		PanelMageTop.GetComponent<PanelMage>().Prepare(enemyPlayer, this);
@@ -75,6 +81,11 @@ public class PanelMinigame : MonoBehaviour, CastListener {
 		bulletTmp.AddComponent<Bullet>().Prepare(caster, spell, from, direction);
 		Bullets.Add(bulletTmp);
 		BulletPrefab.SetActive(false);
+	}
+
+
+	internal void SpawnBonus(Bonus bonus) {
+		PanelFounders.GetComponent<PanelFounders>().Prepare(bonus);
 	}
 }
 

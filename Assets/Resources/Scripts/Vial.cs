@@ -16,5 +16,5 @@ public class Vial {
 }
 
 public enum VialParam {
-    ManaRegen, LifeRegen, DmgBonus, Time
+    ManaAdd, HealthAdd, DmgBonus, Time
 }

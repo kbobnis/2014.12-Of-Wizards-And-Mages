@@ -88,12 +88,12 @@ public class Mage  {
 
 
     internal void UseVial(Vial vial) {
-        if (vial.VialParams.ContainsKey(VialParam.LifeRegen)) {
-			ActualHealth += vial.VialParams[VialParam.LifeRegen];
+        if (vial.VialParams.ContainsKey(VialParam.HealthAdd)) {
+			ActualHealth += vial.VialParams[VialParam.HealthAdd];
         }
 
-        if (vial.VialParams.ContainsKey(VialParam.ManaRegen)) {
-			ActualMana += vial.VialParams[VialParam.ManaRegen];
+        if (vial.VialParams.ContainsKey(VialParam.ManaAdd)) {
+			ActualMana += vial.VialParams[VialParam.ManaAdd];
         }
     }
 
