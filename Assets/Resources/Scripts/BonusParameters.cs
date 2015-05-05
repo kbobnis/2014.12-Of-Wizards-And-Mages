@@ -22,7 +22,6 @@ class BonusParameters {
 		MaxSecondsOfSpawn = maxSecondsOfSpawn;
 		BonusConfigs = bonusConfigs;
 		NextSpawnTime = UnityEngine.Random.Range(MinSecondsOfSpawn, MaxSecondsOfSpawn) + Time.time;
-		Debug.Log("first spawn time: " + NextSpawnTime);
 	}
 
 	public void Update() {
@@ -50,7 +49,6 @@ class BonusParameters {
 		foreach (BonusConfig bc in BonusConfigs) {
 			if (bc.Weight > oneDraw) {
 				if (bc.Bonus != null) {
-					Debug.Log("Bonus is " + bc.Bonus.Vial.Name);
 					Game.Me.PanelMinigame.GetComponent<PanelMinigame>().SpawnBonus(bc.Bonus);
 				}
 				break;

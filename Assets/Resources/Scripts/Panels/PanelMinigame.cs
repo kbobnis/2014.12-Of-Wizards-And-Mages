@@ -45,9 +45,7 @@ public class PanelMinigame : MonoBehaviour, CastListener {
 		foreach (GameTickListener gtl in GameTickListeners) {
 			gtl.GameUpdate();
 		}
-
-
-		MinigameParameters.Update();
+		//MinigameParameters.Update();
 	}
 
 	internal void Prepare(Player humanPlayer, Player enemyPlayer, MinigameParameters minigameParameters) {

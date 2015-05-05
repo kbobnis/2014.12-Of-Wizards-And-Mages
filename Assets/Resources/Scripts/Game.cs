@@ -27,8 +27,8 @@ public class Game : MonoBehaviour {
 
 		Shield shield = new Shield(5f, 3f, 2f, 0.15f);
 
-		Spells.Add(new Spell("Fireball", 5, new Dictionary<FlyingParam, int>(){  {FlyingParam.Speed, 80}, {FlyingParam.Damage, 10} }, new Dictionary<AfterHitParam, int>(){ { AfterHitParam.Damage, 10}, {AfterHitParam.Time, 2}} ));
-		Spells.Add(new Spell("Ice", 10, new Dictionary<FlyingParam, int>(){ {FlyingParam.Speed, 120}, {FlyingParam.Damage, 10} }, new Dictionary<AfterHitParam, int>(){ { AfterHitParam.Damage, 20}, {AfterHitParam.Time, 2}, {AfterHitParam.SlowDown, 1}} ));
+		Spells.Add(new Spell("Fireball", 5, new Dictionary<FlyingParam, int>(){  {FlyingParam.Speed, 8}, {FlyingParam.Damage, 10}, {FlyingParam.Size, 5} }, new Dictionary<AfterHitParam, int>(){ { AfterHitParam.Damage, 10}, {AfterHitParam.Time, 2}} ));
+		Spells.Add(new Spell("Ice", 10, new Dictionary<FlyingParam, int>(){ {FlyingParam.Speed, 12}, {FlyingParam.Damage, 10}, {FlyingParam.Size, 5} }, new Dictionary<AfterHitParam, int>(){ { AfterHitParam.Damage, 20}, {AfterHitParam.Time, 2}, {AfterHitParam.SlowDown, 1}} ));
 
 		Vial vial = new Vial("Minor Mana Potion", new Dictionary<VialParam, int>() { { VialParam.ManaAdd, 100 }, { VialParam.HealthAdd, 100 } }, SpriteManager.ManaPotion);
         Vials.Add(vial);
@@ -37,8 +37,6 @@ public class Game : MonoBehaviour {
 		List<Vial> rightVials = new List<Vial>();
 		rightVials.Add(new Vial("Double bonus", new Dictionary<VialParam, int>() { { VialParam.ManaAdd, 100 }, { VialParam.HealthAdd, 100 } }, SpriteManager.HealthPotion));
         rightVials.Add(new Vial("Faster mana recovery", new Dictionary<VialParam, int>() { { VialParam.HealthAdd, 100 } }, SpriteManager.ManaPotion));
-
-
 
 		Mage ivaAllesi = new Mage("Iva Alessi", MageClass.Thenacurviat);
 		ivaAllesi.LeftHand = Spells[0];
@@ -62,7 +60,6 @@ public class Game : MonoBehaviour {
 
 		Bonus b = new Bonus(vial, SpriteManager.HealthBonusOnMap, SpriteManager.HealthBonusOnMapShadow, true);
 
-
 		MinigameParameters minigameParameters = new MinigameParameters(new BonusParameters(0, 3, 1, 1, new List<BonusConfig>(){new BonusConfig(b, 0.8f), new BonusConfig(null, 0.1f)}));
 
 		PanelMinigame.GetComponent<PanelMinigame>().Prepare(Player, Enemy, minigameParameters);
@@ -77,6 +74,7 @@ public class Game : MonoBehaviour {
 public enum FlyingParam {
 	Speed,
 	Damage,
+	Size
 }
 
 public enum AfterHitParam {
