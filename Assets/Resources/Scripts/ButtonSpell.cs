@@ -6,7 +6,7 @@ using System;
 
 public class ButtonSpell : MonoBehaviour {
 
-	public GameObject ImageSpellCasting, ImageSpellReady;
+	public GameObject ImageSpellReady;
 	public Spell Spell;
 	private Mage Caster;
 	public GameObject WhereToCastFrom;
@@ -57,7 +57,6 @@ public class ButtonSpell : MonoBehaviour {
 	void PointerUp() {
 
 		try {
-			ImageSpellCasting.SetActive(false);
 			if (WillCast && !Casted) {
 				Cast(Direction);
 			}
@@ -83,8 +82,6 @@ public class ButtonSpell : MonoBehaviour {
 		Casted = false ;
 		WillCast = false;
 		StartingMousePos = Input.mousePosition;
-		ImageSpellCasting.SetActive(true);
-		ImageSpellCasting.GetComponent<Image>().color = Color.black;
 		PointerMove();
 	}
 
@@ -95,9 +92,6 @@ public class ButtonSpell : MonoBehaviour {
 			Distance = (Mathf.Abs(dX - StartingMousePos.x) + Mathf.Abs(dY - StartingMousePos.y)) / (float)Screen.width;
 			Direction = new Vector2((dX - GetComponent<Transform>().position.x), (dY - GetComponent<Transform>().position.y));
 			Direction.Normalize();
-
-			ImageSpellCasting.GetComponent<Image>().color = Distance > 0.1f ? Color.green : Color.black;
-			ImageSpellCasting.transform.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
 
 			WillCast = Distance > 0.1f;
 			if (WillCast) {

@@ -16,5 +16,6 @@ public class MoveBackground : MonoBehaviour {
 		}
 		transform.position = new Vector3(pos.x, pos.y + 0.5f, 0);
 
+		Debug.Log("pos y: " + pos.y + ", height; " + GetComponent<RectTransform>().GetHeight());
 	}
 }
