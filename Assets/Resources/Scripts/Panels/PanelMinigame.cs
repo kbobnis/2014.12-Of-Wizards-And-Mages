@@ -55,16 +55,16 @@ public class PanelMinigame : MonoBehaviour, CastListener {
 		PanelMageBottom.GetComponent<PanelMage>().Prepare(humanPlayer, this);
 		PanelMageTop.GetComponent<PanelMage>().Prepare(enemyPlayer, this);
 		
-		LeftCollider.center = new Vector3(360 * AspectRatioKeeper.ActualScale / 2, 0);
-		LeftCollider.size = new Vector3(0, 600 * AspectRatioKeeper.ActualScale, 1);
+		LeftCollider.center = new Vector3(Game.Me.W / 2, 0);
+		LeftCollider.size = new Vector3(0, Game.Me.H, 1);
 	
-		RightCollider.center = new Vector3(-360 * AspectRatioKeeper.ActualScale / 2, 0);
-		RightCollider.size = new Vector3(0, 600 * AspectRatioKeeper.ActualScale);
+		RightCollider.center = new Vector3(- Game.Me.W/ 2, 0);
+		RightCollider.size = new Vector3(0, Game.Me.H);
 
-		TopCollider.center = new Vector3(0, -AspectRatioKeeper.ActualScale / 2 * 600);
-		TopCollider.size = new Vector3(360 * AspectRatioKeeper.ActualScale, 0);
-		BottomCollider.center = new Vector3(0, AspectRatioKeeper.ActualScale / 2 * 600);
-		BottomCollider.size = new Vector3(360 * AspectRatioKeeper.ActualScale, 0);
+		TopCollider.center = new Vector3(0, -Game.Me.H / 2);
+		TopCollider.size = new Vector3(Game.Me.W, 0);
+		BottomCollider.center = new Vector3(0, Game.Me.H/2);
+		BottomCollider.size = new Vector3(Game.Me.W, 0);
 
 		AiController aic = new AiController();
 		aic.PrepareFight(enemyPlayer.Mage, enemyPlayer.Ai, PanelMageTop.GetComponent<PanelMage>(), PanelMageBottom.GetComponent<PanelMage>());

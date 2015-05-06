@@ -10,12 +10,20 @@ public class Game : MonoBehaviour {
     public List<Vial> Vials = new List<Vial>();
 	public Player Player, Enemy;
 
+	public int W, H;
+	public static readonly int GameW = 1080;
+	public static readonly int GameH = 1920;
 	
 
 	void Awake() {
 		Me = this;
 		PanelMinigame.SetActive(false);
 		PanelMenu.SetActive(true);
+	}
+
+	void Update() {
+		W = (int)(GameW * AspectRatioKeeper.ActualScale);
+		H = (int)(GameH * AspectRatioKeeper.ActualScale);
 	}
 
 	public static float GetXPositionFromGlobal(float screenPos){
@@ -27,8 +35,8 @@ public class Game : MonoBehaviour {
 
 		Shield shield = new Shield(5f, 3f, 2f, 0.15f);
 
-		Spells.Add(new Spell("Fireball", 5, new Dictionary<FlyingParam, int>(){  {FlyingParam.Speed, 8}, {FlyingParam.Damage, 10}, {FlyingParam.Size, 5} }, new Dictionary<AfterHitParam, int>(){ { AfterHitParam.Damage, 10}, {AfterHitParam.Time, 2}} ));
-		Spells.Add(new Spell("Ice", 10, new Dictionary<FlyingParam, int>(){ {FlyingParam.Speed, 12}, {FlyingParam.Damage, 10}, {FlyingParam.Size, 5} }, new Dictionary<AfterHitParam, int>(){ { AfterHitParam.Damage, 20}, {AfterHitParam.Time, 2}, {AfterHitParam.SlowDown, 1}} ));
+		Spells.Add(new Spell("Fireball", 5, new Dictionary<FlyingParam, int>(){  {FlyingParam.Speed, 80}, {FlyingParam.Damage, 10}, {FlyingParam.Size, 12} }, new Dictionary<AfterHitParam, int>(){ { AfterHitParam.Damage, 10}, {AfterHitParam.Time, 2}} ));
+		Spells.Add(new Spell("Ice", 10, new Dictionary<FlyingParam, int>(){ {FlyingParam.Speed, 120}, {FlyingParam.Damage, 10}, {FlyingParam.Size, 10} }, new Dictionary<AfterHitParam, int>(){ { AfterHitParam.Damage, 20}, {AfterHitParam.Time, 2}, {AfterHitParam.SlowDown, 1}} ));
 
 		Vial vial = new Vial("Minor Mana Potion", new Dictionary<VialParam, int>() { { VialParam.ManaAdd, 100 }, { VialParam.HealthAdd, 100 } }, SpriteManager.ManaPotion);
         Vials.Add(vial);
