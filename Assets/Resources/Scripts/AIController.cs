@@ -28,8 +28,6 @@ public class AiController : PlayerController, GameTickListener {
 
 			Vector3 direction = (enemyPos - myPos).normalized;
 
-			Debug.Log("Shot, direction : " + direction);
-
 			MyPanel.GetComponent<PanelMage>().ButtonSpellLeft.GetComponent<ButtonSpell>().Cast(direction);
 
 		}

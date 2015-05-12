@@ -24,8 +24,6 @@ public class Bullet : MonoBehaviour {
 		float w = Screen.width * AspectRatioKeeper.ActualScale * spell.FlyingParams[FlyingParam.Size] / 100f;
 		float h = Screen.height * AspectRatioKeeper.ActualScale * spell.FlyingParams[FlyingParam.Size] / 100f;
 
-		Debug.Log("bullet w: " + w + ", h: " + h);
-
 		GetComponent<RectTransform>().offsetMin = new Vector2(-w / 2, -h / 2);
 		GetComponent<RectTransform>().offsetMax = new Vector2(w / 2, h / 2);
 		transform.position = from;
