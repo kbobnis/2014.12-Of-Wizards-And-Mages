@@ -13,7 +13,6 @@ public class Bullet : MonoBehaviour {
 		oldPos.x += Direction.x * Time.deltaTime * 5;
 		oldPos.y += Direction.y * Time.deltaTime * 5;
 		transform.position = oldPos;
-
 	}
 
 	internal void Prepare(Mage caster, Spell spell, Vector2 from, Vector2 direction) {

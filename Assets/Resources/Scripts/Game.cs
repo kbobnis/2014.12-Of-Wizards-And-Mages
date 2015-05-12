@@ -27,7 +27,7 @@ public class Game : MonoBehaviour {
 	}
 
 	public static float GetXPositionFromGlobal(float screenPos){
-		return (screenPos - (Screen.width / 2 - 360 * AspectRatioKeeper.ActualScale/2)) / (360 * AspectRatioKeeper.ActualScale);
+		return (screenPos - (Screen.width / 2 - Game.Me.W/2)) / (Game.Me.W);
 	}
 
 	IEnumerator StartingGame() {
