@@ -3,23 +3,44 @@ Funkcjonalności:
 	BUG: powinny być czarne paski na bokach (teraz jest nieodświeżona grafika
 	Czary
 		pocisk
-			animacja
-			BUG: collider z czasem robi się większy od grafiki pocisku
-		runa ma byc powiazana z czarem
+			[font] wsparcie dla animacji pocisku
+			[logika] BUG: collider jest większy od grafiki pocisku (setParent?)
+			[grafika] trzecia animacja pocisku
+			[grafika] czwarta animacja pocisku
+		[logika] runa ma byc powiazana z czarem
 		wybuch
-			animacja (+ grafika)
+			[grafika] animacji
+			[front] animacja
 	Fiolki na pasku 
-		przy definicji fiolek decydujemy który pojawia się po lewej a który po prawej strony
+		[logika] przy definicji fiolek decydujemy który pojawia się po lewej a który po prawej strony
 		[grafika] fiolek małe, średnie, duże -> życie i mana. zrobić osobno szkiełka i osobno wnętrze (nie animować)
 	Bonusy na planszy
-		BUG: nie mogą się na sobie pojawiać, nie mogą pojawiać się na przeszkodach
-		BUG: pojawiają się zawsze u naszego maga z lewej strony niezależnie kto weźmie
+		[logika] BUG: nie mogą się na sobie pojawiać, nie mogą pojawiać się na przeszkodach
+		[logika] BUG: pojawiają się zawsze u naszego maga z lewej strony niezależnie kto weźmie
 	Przeszkody na planszy (przeszkody nie umierają, pociski na nich wybuchają)
-		są generowane przy uruchomieniu minigierki
+		[front] wyświetlanie przeszkód
+		[logika] są generowane przy uruchomieniu minigierki
+	Tarcza
+		[front] przywrócić do działania obecną wersję
+		[front] zamiast kulek, zrobić kreski (od pojawienia się poprzedniego elementu do obecnego)
+		[logika] optymalizacja pamięciowa tarczy (deklaracja 400 elementów na początku gry)
+	Chodzenie (tylko wróg)
+		[logika] może być zmienne
+		[logika] zmiana prędkości kosztuje mana na sekundę
+	[logika] Sztuczna inteligencja
+		zmiana prędkości chodzenia 
+			zależna od czynników (na przykład % pełności mana, życia, innych, losowo, omijanie pocisków)
+		prędkość strzelania zależna od jego mana i życia wroga
+		zbieranie bonusów 
+			zależne od własnej ilości mana i życia
+			zależne lub przeciwnika ilości mana i życia (złośliwość)
+			zależne od tego, czy jest szansa na zebranie danego bonusu (pocisk własny lub przeciwnika już tam leci i szybciej dotrze)
+			pociskiem który jest tańszy, chyba, że ma mało życia
+			
+			
 		
-	
-	
-	Sztuczna inteligencja
+		
+		
 	
 	
 	
