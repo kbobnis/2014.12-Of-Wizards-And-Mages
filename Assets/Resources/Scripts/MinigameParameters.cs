@@ -5,7 +5,6 @@ using System.Text;
 
 class MinigameParameters {
 	
-	
 	private BonusParameters BonusParameters;
 
 	public MinigameParameters(BonusParameters bonusParameters) {

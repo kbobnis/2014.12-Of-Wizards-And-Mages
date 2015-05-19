@@ -1,5 +1,29 @@
-This is readme file.
-
 
 Funkcjonalności:
-	Zbieranie 
+	BUG: powinny być czarne paski na bokach (teraz jest nieodświeżona grafika
+	Czary
+		pocisk
+			animacja
+			BUG: collider z czasem robi się większy od grafiki pocisku
+		runa ma byc powiazana z czarem
+		wybuch
+			animacja (+ grafika)
+	Fiolki na pasku 
+		przy definicji fiolek decydujemy który pojawia się po lewej a który po prawej strony
+		[grafika] fiolek małe, średnie, duże -> życie i mana. zrobić osobno szkiełka i osobno wnętrze (nie animować)
+	Bonusy na planszy
+		BUG: nie mogą się na sobie pojawiać, nie mogą pojawiać się na przeszkodach
+		BUG: pojawiają się zawsze u naszego maga z lewej strony niezależnie kto weźmie
+	Przeszkody na planszy (przeszkody nie umierają, pociski na nich wybuchają)
+		są generowane przy uruchomieniu minigierki
+		
+	
+	
+	Sztuczna inteligencja
+	
+	
+	
+	
+	
+	
+	

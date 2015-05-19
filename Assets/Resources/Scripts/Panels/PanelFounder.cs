@@ -6,17 +6,10 @@ public class PanelFounder : MonoBehaviour {
 
 	public GameObject FounderMain, FounderShadow;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+	public Bonus Bonus;
 
 	internal void Prepare(Bonus bonus) {
+		Bonus = bonus;
 		FounderMain.GetComponent<Image>().sprite = bonus.SpriteOnMap;
 		FounderShadow.GetComponent<Image>().sprite = bonus.SpriteOnMapShadow;
 
@@ -31,7 +24,13 @@ public class PanelFounder : MonoBehaviour {
 		GetComponent<RectTransform>().offsetMin = new Vector2(givenX, -givenY);
 		GetComponent<RectTransform>().offsetMax = new Vector2(givenX, -givenY);
 
-		//Debug.Log("Given x: " + givenX + ", given y: " + givenY + ", Max x : " + maxX + ", max y: " + maxY);
-		//GetComponent<RectTransform>().position = new Vector3(givenX, givenY);
+		int width = (int)FounderMain.GetComponent<RectTransform>().GetWidth();
+
+		FounderMain.GetComponent<SphereCollider>().radius = width/2;
+	}
+
+	internal void TakeBy(Mage Caster) {
+		Caster.AddVial(Bonus.Vial);
+		Destroy(this.gameObject);
 	}
 }

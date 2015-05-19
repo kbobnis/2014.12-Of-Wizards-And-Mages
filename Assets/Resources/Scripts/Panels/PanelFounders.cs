@@ -12,7 +12,7 @@ public class PanelFounders : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		
 	}
 
 	internal void Prepare(Bonus bonus) {

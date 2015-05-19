@@ -38,9 +38,9 @@ public class Game : MonoBehaviour {
 		Spells.Add(new Spell("Fireball", 5, new Dictionary<FlyingParam, int>(){  {FlyingParam.Speed, 80}, {FlyingParam.Damage, 10}, {FlyingParam.Size, 12} }, new Dictionary<AfterHitParam, int>(){ { AfterHitParam.Damage, 10}, {AfterHitParam.Time, 2}} ));
 		Spells.Add(new Spell("Ice", 10, new Dictionary<FlyingParam, int>(){ {FlyingParam.Speed, 120}, {FlyingParam.Damage, 10}, {FlyingParam.Size, 10} }, new Dictionary<AfterHitParam, int>(){ { AfterHitParam.Damage, 20}, {AfterHitParam.Time, 2}, {AfterHitParam.SlowDown, 1}} ));
 
-		Vial vial = new Vial("Minor Mana Potion", new Dictionary<VialParam, int>() { { VialParam.ManaAdd, 100 }, { VialParam.HealthAdd, 100 } }, SpriteManager.ManaPotion);
+		Vial vial = new Vial("Minor Mana Potion", new Dictionary<VialParam, int>() { { VialParam.ManaAdd, 10 } }, SpriteManager.ManaPotion);
         Vials.Add(vial);
-        Vials.Add(new Vial("Minor Health Potion", new Dictionary<VialParam, int>() { { VialParam.HealthAdd, 100 } }, SpriteManager.HealthPotion));
+        Vials.Add(new Vial("Minor Health Potion", new Dictionary<VialParam, int>() { { VialParam.HealthAdd, 10 } }, SpriteManager.HealthPotion));
 
 		List<Vial> rightVials = new List<Vial>();
 		rightVials.Add(new Vial("Double bonus", new Dictionary<VialParam, int>() { { VialParam.ManaAdd, 100 }, { VialParam.HealthAdd, 100 } }, SpriteManager.HealthPotion));
@@ -68,7 +68,7 @@ public class Game : MonoBehaviour {
 
 		Bonus b = new Bonus(vial, SpriteManager.HealthBonusOnMap, SpriteManager.HealthBonusOnMapShadow, true);
 
-		MinigameParameters minigameParameters = new MinigameParameters(new BonusParameters(0, 3, 1, 1, new List<BonusConfig>(){new BonusConfig(b, 0.8f), new BonusConfig(null, 0.1f)}));
+		MinigameParameters minigameParameters = new MinigameParameters(new BonusParameters(1, 1, 3, 5, new List<BonusConfig>(){new BonusConfig(b, 0.8f), new BonusConfig(null, 0.1f)}));
 
 		PanelMinigame.GetComponent<PanelMinigame>().Prepare(Player, Enemy, minigameParameters);
 	}

@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class Bullet : MonoBehaviour {
 
+	private Mage Caster;
 	Vector2 Direction;
 	Spell Spell;
 	bool Bounced = false;
@@ -16,6 +17,7 @@ public class Bullet : MonoBehaviour {
 	}
 
 	internal void Prepare(Mage caster, Spell spell, Vector2 from, Vector2 direction) {
+		Caster = caster;
 		Spell = spell;
 		Direction = direction * spell.FlyingParams[FlyingParam.Speed] * AspectRatioKeeper.ActualScale;
 		GetComponent<Image>().sprite = Resources.Load<Sprite>("GUI/" + spell.Name);
@@ -57,6 +59,13 @@ public class Bullet : MonoBehaviour {
 		if (b != null) {
 			BlowUp();
 			b.BlowUp();
+		}
+
+		PanelFounder pf = other.transform.parent.GetComponent<PanelFounder>();
+		if (pf != null) {
+			BlowUp();
+			Debug.Log("bonus found");
+			pf.TakeBy(Caster);
 		}
 	}
 

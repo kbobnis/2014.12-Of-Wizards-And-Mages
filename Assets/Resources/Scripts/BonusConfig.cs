@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-class Bonus {
+public class Bonus {
 	
 	public Vial Vial;
 	public Sprite SpriteOnMap;
