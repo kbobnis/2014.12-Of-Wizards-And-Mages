@@ -1,4 +1,4 @@
-Sneak RPG, a game created on Ludum Dare 34
+Of Wizards and Mages, a game created in 2014
 
 authors
 Krzysztof Bobnis (Programming)
@@ -10,10 +10,13 @@ Code is playable, but there are errors and game is on a very early stage of deve
 
 Platform: mobile
 
+Concept:
+![](docs/plansza1.jpg)
 
+Current look:
 ![](docs/Screenshot_1.png)
 
-![](docs/spellcollector.jpg)
+
 
 
 
