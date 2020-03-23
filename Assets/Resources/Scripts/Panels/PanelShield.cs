@@ -13,22 +13,22 @@ public class PanelShield : MonoBehaviour {
 
 	void Awake() {
 		EventTrigger et = gameObject.AddComponent<EventTrigger>();
-		et.delegates = new System.Collections.Generic.List<EventTrigger.Entry>();
+		et.triggers = new System.Collections.Generic.List<EventTrigger.Entry>();
 
 		EventTrigger.TriggerEvent te = new EventTrigger.TriggerEvent();
 		te.AddListener((eventData) => PointerDown());
 		EventTrigger.Entry entry = new EventTrigger.Entry() { callback = te, eventID = EventTriggerType.PointerDown };
-		et.delegates.Add(entry);
+		et.triggers.Add(entry);
 
 		EventTrigger.TriggerEvent te2 = new EventTrigger.TriggerEvent();
 		te2.AddListener((eventData) => PointerMove());
 		EventTrigger.Entry entry2 = new EventTrigger.Entry() { callback = te2, eventID = EventTriggerType.Drag };
-		et.delegates.Add(entry2);
+		et.triggers.Add(entry2);
 
 		EventTrigger.TriggerEvent te3 = new EventTrigger.TriggerEvent();
 		te3.AddListener((eventData) => PointerUp());
 		EventTrigger.Entry entry3 = new EventTrigger.Entry() { callback = te3, eventID = EventTriggerType.PointerUp };
-		et.delegates.Add(entry3);
+		et.triggers.Add(entry3);
 	}
 
 	private void PointerDown() {

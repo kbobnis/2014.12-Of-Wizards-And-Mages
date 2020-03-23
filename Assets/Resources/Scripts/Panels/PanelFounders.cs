@@ -19,6 +19,6 @@ public class PanelFounders : MonoBehaviour {
 		GameObject bonusPrefab = Instantiate(FounderPrefab) as GameObject;
 		bonusPrefab.SetActive(true);
 		bonusPrefab.transform.parent = transform;
-		bonusPrefab.GetComponent<PanelFounder>().Prepare(bonus);
+		//bonusPrefab.GetComponent<PanelFounder>().Prepare(bonus);
 	}
 }

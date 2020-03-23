@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Resources.Scripts.AI;
 
 public class Mage  {
 	public string Name;
@@ -13,6 +14,9 @@ public class Mage  {
     public List<Vial> LeftVials = new List<Vial>();
 	public List<Vial> RightVials = new List<Vial>();
     public List<Vial> ActiveBonuses;// = new List<Vial>();
+    public bool virtualplayer;
+
+    public Board board;
 
 	public float ActualMana {
 		get { return _ActualMana; }
@@ -41,11 +45,12 @@ public class Mage  {
 		get { return MageClass.StartingMana; }
 	}
 
-	public Mage(string name, MageClass mageClass) {
+	public Mage(string name, MageClass mageClass, bool virtualPlayer) {
 		Name = name;
 		MageClass = mageClass;
 		_ActualMana = mageClass.StartingMana;
 		_ActualHealth = mageClass.StartingLife;
+        this.virtualplayer = virtualPlayer;
 	}
 
 	internal bool CanAfford(Spell Spell) {

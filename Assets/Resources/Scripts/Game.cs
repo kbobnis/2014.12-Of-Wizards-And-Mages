@@ -46,14 +46,14 @@ public class Game : MonoBehaviour {
 		rightVials.Add(new Vial("Double bonus", new Dictionary<VialParam, int>() { { VialParam.ManaAdd, 100 }, { VialParam.HealthAdd, 100 } }, SpriteManager.HealthPotion));
         rightVials.Add(new Vial("Faster mana recovery", new Dictionary<VialParam, int>() { { VialParam.HealthAdd, 100 } }, SpriteManager.ManaPotion));
 
-		Mage ivaAllesi = new Mage("Iva Alessi", MageClass.Thenacurviat);
+		Mage ivaAllesi = new Mage("Iva Alessi", MageClass.Thenacurviat, false);
 		ivaAllesi.LeftHand = Spells[0];
 		ivaAllesi.RightHand = Spells[1];
 		ivaAllesi.Shield = shield;
         ivaAllesi.LeftVials = Vials;
 		ivaAllesi.RightVials = rightVials;
 
-		Mage kelThuzad = new Mage("Kel Thuzad", MageClass.Creator);
+		Mage kelThuzad = new Mage("Kel Thuzad", MageClass.Creator, true);
 		kelThuzad.LeftHand = Spells[1];
 		kelThuzad.RightHand = Spells[0];
         kelThuzad.Shield = shield;

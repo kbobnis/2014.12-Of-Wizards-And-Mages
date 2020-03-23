@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Resources.Scripts.AI;
 
 public class PanelMinigame : MonoBehaviour, CastListener {
 
@@ -14,6 +15,7 @@ public class PanelMinigame : MonoBehaviour, CastListener {
 	public List<GameTickListener> GameTickListeners = new List<GameTickListener>();
 
 	private MinigameParameters MinigameParameters;
+    private Board board;
 
 	void Awake() {
 		BulletPrefab.SetActive(false);
@@ -66,7 +68,11 @@ public class PanelMinigame : MonoBehaviour, CastListener {
 		BottomCollider.center = new Vector3(0, Game.Me.H/2);
 		BottomCollider.size = new Vector3(Game.Me.W, 0);
 
-		AiController aic = new AiController();
+
+        board = new Board(GameObject.FindWithTag("MagImage").GetComponent<Collider>(), GetComponent<RectTransform>(), null, null);
+        humanPlayer.Mage.board = board;
+        enemyPlayer.Mage.board = board;
+		AiController aic = new AiController(board);
 		aic.PrepareFight(enemyPlayer.Mage, enemyPlayer.Ai, PanelMageTop.GetComponent<PanelMage>(), PanelMageBottom.GetComponent<PanelMage>());
 		GameTickListeners.Add(aic);
 	}
@@ -76,7 +82,7 @@ public class PanelMinigame : MonoBehaviour, CastListener {
 		BulletPrefab.SetActive(true);
 		GameObject bulletTmp = Instantiate(BulletPrefab) as GameObject;
 		bulletTmp.transform.parent = transform;
-		bulletTmp.AddComponent<Bullet>().Prepare(caster, spell, from, direction);
+		bulletTmp.AddComponent<Bullet>().Prepare(caster, spell, from, direction, board);
 		Bullets.Add(bulletTmp);
 		BulletPrefab.SetActive(false);
 	}

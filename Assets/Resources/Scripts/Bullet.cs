@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using Assets.Resources.Scripts.AI;
 
 public class Bullet : MonoBehaviour {
 
@@ -9,14 +10,15 @@ public class Bullet : MonoBehaviour {
 	Spell Spell;
 	bool Bounced = false;
 
-	void Update() { 
+	void Update() {
+        Vector3 v3 = GetComponent<Collider>().bounds.size;
 		Vector2 oldPos = transform.position;
 		oldPos.x += Direction.x * Time.deltaTime * 5;
 		oldPos.y += Direction.y * Time.deltaTime * 5;
 		transform.position = oldPos;
 	}
 
-	internal void Prepare(Mage caster, Spell spell, Vector2 from, Vector2 direction) {
+	internal void Prepare(Mage caster, Spell spell, Vector2 from, Vector2 direction, Board board) {
 		Caster = caster;
 		Spell = spell;
 		Direction = direction * spell.FlyingParams[FlyingParam.Speed] * AspectRatioKeeper.ActualScale;
@@ -30,6 +32,16 @@ public class Bullet : MonoBehaviour {
 		transform.position = from;
 
 		GetComponent<SphereCollider>().radius = w/2;
+
+        if (!caster.virtualplayer)
+        {
+            Vector3[] corners = new Vector3[4];
+            GetComponent<RectTransform>().GetWorldCorners(corners);
+            board.addBullet(from, corners, Direction);
+        }
+        
+        
+
 	}
 
 	void OnTriggerEnter(Collider other) {

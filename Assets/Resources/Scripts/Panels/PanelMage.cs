@@ -12,6 +12,14 @@ public class PanelMage : MonoBehaviour {
 	}
 
 	void Update() {
+        
+        Vector3 pos = transform.position;
+        Vector2 pos2 = transform.position;
+
+
+        Vector3 posWorld = transform.TransformPoint( transform.position );
+        Vector2 pos2World = transform.TransformPoint(transform.position);
+
 		if (  Player != null) {
 			PanelFlaskLife.GetComponent<PanelFlask>().UpdateValue((int)Player.Mage.ActualHealth, Player.Mage.MaxHealth);
 			PanelFlaskMana.GetComponent<PanelFlask>().UpdateValue((int)Player.Mage.ActualMana, Player.Mage.MaxMana);
@@ -37,6 +45,7 @@ public class PanelMage : MonoBehaviour {
 	}
 
 	internal void TakeDamage(int p) {
+        Debug.Log(Player.Mage.board.currentSlice + " currentTimeInBoard");
 		Player.Mage._ActualHealth -= p;
 
 	}
