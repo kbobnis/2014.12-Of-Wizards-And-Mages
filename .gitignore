@@ -16,3 +16,4 @@ platforms
 /web/*.html
 /web/*.unity3d
 /spellcollector.v12.suo
+/.vs
